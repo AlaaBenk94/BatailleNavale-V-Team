@@ -1,4 +1,5 @@
 # BatailleNavale-V-Team
 
 BENKARRAD Alaa Eddine , 
-CHERIFI Abdelaziz
+CHERIFI Abdelaziz ,
+HAFIANE Walid ;
