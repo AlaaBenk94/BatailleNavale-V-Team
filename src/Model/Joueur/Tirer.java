@@ -1,4 +1,4 @@
-package NavaleBattle.Model.Joueur;
+package Model.Joueur;
 
 public interface Tirer {
 

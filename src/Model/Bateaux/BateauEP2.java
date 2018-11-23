@@ -1,4 +1,4 @@
-package NavaleBattle.Model.Bateaux;
+package Model.Bateaux;
 
 public class BateauEP2 extends Bateau {
 }

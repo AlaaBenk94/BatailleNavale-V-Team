@@ -1,4 +1,4 @@
-package NavaleBattle.Controleur;
+package Controleur;
 
 public class Controleur {
 }

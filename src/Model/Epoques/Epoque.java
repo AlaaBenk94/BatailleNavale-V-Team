@@ -1,4 +1,4 @@
-package NavaleBattle.Model.Epoques;
+package Model.Epoques;
 
 public abstract class Epoque {
 

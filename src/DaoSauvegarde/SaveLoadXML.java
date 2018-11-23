@@ -1,4 +1,4 @@
-package NavaleBattle.DaoSauvegarde;
+package DaoSauvegarde;
 
 public class SaveLoadXML extends DAOSaveLoad {
 }
