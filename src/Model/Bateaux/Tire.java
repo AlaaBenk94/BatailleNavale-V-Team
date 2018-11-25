@@ -2,23 +2,40 @@ package Model.Bateaux;
 
 public class Tire {
 
-	private int Tireur;
-	private int PositionCible;
+	private int tireur;
+	private int[] PositionCible;
+	private int force;
+
 
 	public int getTireur() {
-		return this.Tireur;
+		return tireur;
 	}
 
-	public void setTireur(int Tireur) {
-		this.Tireur = Tireur;
+	public void setTireur(int tireur) {
+		this.tireur = tireur;
 	}
 
-	public int getPositionCible() {
-		return this.PositionCible;
+	public int[] getPositionCible() {
+		return PositionCible;
 	}
 
-	public void setPositionCible(int PositionCible) {
-		this.PositionCible = PositionCible;
+	public void setPositionCible(int[] positionCible) {
+		PositionCible = positionCible;
 	}
+
+	public int getForce() {
+		return force;
+	}
+
+	public void setForce(int force) {
+		this.force = force;
+	}
+
+	public Tire(int tireur, int force, int[] PositionCible){
+		this.force=force;
+		this.tireur=tireur;
+		this.PositionCible=PositionCible;
+	}
+
 
 }
