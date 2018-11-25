@@ -1,14 +1,14 @@
 package DaoSauvegarde;
 
-public class UsineSaveLoadXML extends UsineSaveLoad {
+public class UsineSaveLoadSerial extends UsineSaveLoad {
     private static UsineSaveLoad usineSaveLoad;
-    private UsineSaveLoadXML(){};
+    private UsineSaveLoadSerial(){};
     public static UsineSaveLoad getInstence(){
-        if(usineSaveLoad==null)usineSaveLoad=new UsineSaveLoadXML();
+        if(usineSaveLoad==null)usineSaveLoad=new UsineSaveLoadSerial();
         return usineSaveLoad;
     }
     @Override
     public DAOSaveLoad getDAOSaveLoad() {
-        return SaveLoadXML.getInstence();
+        return SaveLoadSerial.getInstentce();
     }
 }

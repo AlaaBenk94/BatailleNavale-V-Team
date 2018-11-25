@@ -1,15 +1,13 @@
 package DaoSauvegarde;
 
+import Model.jeu.*;
+
 public abstract class DAOSaveLoad {
 
-	private int chemin;
+	private String chemin;
 
-	public void sauvegarder() {
-		throw new UnsupportedOperationException();
-	}
+	public abstract void sauvegarder(Jeu jeu ,String chemin);
 
-	public void charger() {
-		throw new UnsupportedOperationException();
-	}
+	public abstract Jeu charger(String chemin);
 
 }
