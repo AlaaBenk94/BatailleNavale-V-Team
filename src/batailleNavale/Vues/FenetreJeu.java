@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import javax.swing.text.View;
 
 /**
  *
@@ -30,10 +31,10 @@ public class FenetreJeu extends JFrame implements Observer{
     static final int Hauteurgrille=500;
     static final int fenetreLargeur=1200;
     static final int fenetreHeauteur=600;
-    static final String menu_bg_img= "src/img_ressource/bgmenu.png";
-    static final String barre_bg_img= "src/img_ressource/barrebg.png";
-    static final String jeu_icon= "src/img_ressource/jeuicon.png";
-    static final String menu_icon= "src/img_ressource/menuicon.png";
+    static final String menu_bg_img= "src/batailleNavale/img_ressource/bgmenu.png";
+    static final String barre_bg_img= "src/batailleNavale/img_ressource/barrebg.png";
+    static final String jeu_icon= "src/batailleNavale/img_ressource/jeuicon.png";
+    static final String menu_icon= "src/batailleNavale/img_ressource/menuicon.png";
     
     private Jeu modele;
     private Controleur controleur;
@@ -59,6 +60,23 @@ public class FenetreJeu extends JFrame implements Observer{
         ImageIcon img = new ImageIcon(jeu_icon);
         this.setIconImage(img.getImage());
         construction();
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }
 
     void jeuconstruction(){
@@ -213,6 +231,7 @@ public class FenetreJeu extends JFrame implements Observer{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
+                    System.out.println(ImageIO.read(new File(menu_bg_img))==null);
                     g.drawImage(ImageIO.read(new File(menu_bg_img)), 0, 0, null);
                 } catch (IOException ex) {
                     Logger.getLogger(FenetreJeu.class.getName()).log(Level.SEVERE, null, ex);
@@ -691,22 +710,7 @@ public class FenetreJeu extends JFrame implements Observer{
 //        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
 //         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
 //         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
+
 //        //</editor-fold>
 //
 //        /* Create and display the form */
