@@ -5,17 +5,21 @@ package batailleNavale;
  */
 public class Ressources {
 
-    public static final int PLATEAU_WIDTH = 10;
-    public static final int PLATEAU_HEIGHT = 10;
 
-//    public static final  int ROUGE = 2; // case tocuhee
-//    public static final int  VERT = 1; // case selectionnee
-//    public  static final int ORANGE = 3; // case brulee
-//
-//    public static final int ETAT1=1;
-//    public static final int ETAT2=2;
-//    public static final int ETAT3=3;
 
     public static final String[] epoqueNom={"EP1", "EP2"}; // tableau d'epoques
+
+
+    public static final int Largeur=10;
+    public static final int Hauteur=10;
+    public static final int CasTaille=30;
+    public static final int Largeurgrille=500;
+    public static final int Hauteurgrille=500;
+    public static final int fenetreLargeur=1200;
+    public static final int fenetreHeauteur=600;
+    public static final String menu_bg_img= "src/batailleNavale/img_ressource/bgmenu.png";
+    public static final String barre_bg_img= "src/batailleNavale/img_ressource/barrebg.png";
+    public static final String jeu_icon= "src/batailleNavale/img_ressource/jeuicon.png";
+    public static final String menu_icon= "src/batailleNavale/img_ressource/menuicon.png";
 
 }

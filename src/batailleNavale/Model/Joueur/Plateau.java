@@ -25,12 +25,12 @@ public class Plateau {
 
     public Plateau(){
 
-        plateau = new Bateau[Ressources.PLATEAU_HEIGHT][Ressources.PLATEAU_WIDTH];
-        plateau2 = new boolean[Ressources.PLATEAU_HEIGHT][Ressources.PLATEAU_WIDTH];
+        plateau = new Bateau[Ressources.Hauteur][Ressources.Largeur];
+        plateau2 = new boolean[Ressources.Hauteur][Ressources.Largeur];
 
 
-        for(int i=0;i<Ressources.PLATEAU_HEIGHT;i++)
-            for(int j=0;j<Ressources.PLATEAU_WIDTH;j++) {
+        for(int i=0;i<Ressources.Hauteur;i++)
+            for(int j=0;j<Ressources.Largeur;j++) {
                 plateau[i][j] = null;
                 plateau2[i][j]=true;
             }
@@ -62,7 +62,7 @@ public class Plateau {
      **/
 
     private boolean estDeborde(Point p1, Point p2){
-        return !(p1.x<0 || p1.y<0 || p2.x<0 || p2.y<0 || p1.x< Ressources.PLATEAU_WIDTH || p1.y<Ressources.PLATEAU_HEIGHT || p2.x< Ressources.PLATEAU_WIDTH || p2.y<Ressources.PLATEAU_HEIGHT  );
+        return !(p1.x<0 || p1.y<0 || p2.x<0 || p2.y<0 || p1.x< Ressources.Hauteur || p1.y<Ressources.Largeur || p2.x< Ressources.Hauteur || p2.y<Ressources.Largeur  );
     }
 
 
@@ -112,8 +112,8 @@ public class Plateau {
 
     public int getEtatCase(int x, int y){
         int etat=0;
-        for (int i=0;i<Ressources.PLATEAU_HEIGHT;i++)
-            for (int j =0;j<Ressources.PLATEAU_WIDTH;j++){
+        for (int i=0;i<Ressources.Hauteur;i++)
+            for (int j =0;j<Ressources.Largeur;j++){
                 if(!plateau2[x][y])
                     if(plateau[x][y].getResistance()<plateau[x][y].getType())
                         //case touchee
@@ -133,8 +133,8 @@ public class Plateau {
 
     public int[][]getBateauMatrice(){
         int[][] mat = new int[10][10];
-        for(int i=0;i<Ressources.PLATEAU_HEIGHT;i++){
-            for(int j=0;j<Ressources.PLATEAU_WIDTH;j++){
+        for(int i=0;i<Ressources.Hauteur;i++){
+            for(int j=0;j<Ressources.Largeur;j++){
                 mat[i][j]=getEtatCase(i,j);
 
             }
@@ -147,9 +147,9 @@ public class Plateau {
      */
 
     public int[][]getTireMatrice(){
-        int[][] mat = new int[Ressources.PLATEAU_WIDTH][Ressources.PLATEAU_WIDTH];
-        for(int i=0;i<Ressources.PLATEAU_HEIGHT;i++){
-            for(int j=0;j<Ressources.PLATEAU_WIDTH;j++){
+        int[][] mat = new int[Ressources.Hauteur][Ressources.Largeur];
+        for(int i=0;i<Ressources.Hauteur;i++){
+            for(int j=0;j<Ressources.Largeur;j++){
                 if(plateau[i][j].getResistance()==0 || plateau2[i][j]==false)
                     mat[i][j]=0;
                 mat[i][j]=plateau[i][j].getResistance();

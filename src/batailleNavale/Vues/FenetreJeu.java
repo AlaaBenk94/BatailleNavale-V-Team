@@ -2,6 +2,7 @@ package batailleNavale.Vues;
 
 import batailleNavale.Controleur.Controleur;
 import batailleNavale.Model.jeu.Jeu;
+import batailleNavale.Ressources;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,18 +25,7 @@ import javax.swing.text.View;
  * @author walidone
  */
 public class FenetreJeu extends JFrame implements Observer{
-    static final int Largeur=10;
-    static final int Hauteur=10;
-    static final int CasTaille=30;
-    static final int Largeurgrille=500;
-    static final int Hauteurgrille=500;
-    static final int fenetreLargeur=1200;
-    static final int fenetreHeauteur=600;
-    static final String menu_bg_img= "src/batailleNavale/img_ressource/bgmenu.png";
-    static final String barre_bg_img= "src/batailleNavale/img_ressource/barrebg.png";
-    static final String jeu_icon= "src/batailleNavale/img_ressource/jeuicon.png";
-    static final String menu_icon= "src/batailleNavale/img_ressource/menuicon.png";
-    
+
     private Jeu modele;
     private Controleur controleur;
 
@@ -57,7 +47,7 @@ public class FenetreJeu extends JFrame implements Observer{
         modele.addObserver(this);
         this.getContentPane().setBackground(Color.WHITE);
         this.setTitle("BatailleNavale-V-Team");
-        ImageIcon img = new ImageIcon(jeu_icon);
+        ImageIcon img = new ImageIcon(Ressources.jeu_icon);
         this.setIconImage(img.getImage());
         construction();
 
@@ -87,7 +77,7 @@ public class FenetreJeu extends JFrame implements Observer{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File(barre_bg_img)), 0, 0, null);
+                    g.drawImage(ImageIO.read(new File(Ressources.barre_bg_img)), 0, 0, null);
                 } catch (IOException ex) {
                     Logger.getLogger(FenetreJeu.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -133,12 +123,12 @@ public class FenetreJeu extends JFrame implements Observer{
                 joueurMatriceFocuse(evt);
             }
         });
-        plateau_bateu.setPreferredSize(new Dimension(Largeurgrille,Hauteurgrille));
-        plateau_tire.setPreferredSize(new Dimension(Largeurgrille,Hauteurgrille));
-        plateau_bateu.setMaximumSize(new Dimension(Largeurgrille,Hauteurgrille));
-        plateau_tire.setMaximumSize(new Dimension(Largeurgrille,Hauteurgrille));
-        plateau_bateu.setMinimumSize(new Dimension(Largeurgrille,Hauteurgrille));
-        plateau_tire.setMinimumSize(new Dimension(Largeurgrille,Hauteurgrille));
+        plateau_bateu.setPreferredSize(new Dimension(Ressources.Largeurgrille, Ressources.Hauteurgrille));
+        plateau_tire.setPreferredSize(new Dimension(Ressources.Largeurgrille, Ressources.Hauteurgrille));
+        plateau_bateu.setMaximumSize(new Dimension(Ressources.Largeurgrille, Ressources.Hauteurgrille));
+        plateau_tire.setMaximumSize(new Dimension(Ressources.Largeurgrille, Ressources.Hauteurgrille));
+        plateau_bateu.setMinimumSize(new Dimension(Ressources.Largeurgrille, Ressources.Hauteurgrille));
+        plateau_tire.setMinimumSize(new Dimension(Ressources.Largeurgrille, Ressources.Hauteurgrille));
         plateau_tire.setLayout(new java.awt.GridLayout(10, 10));
         plateau_tire.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -147,18 +137,18 @@ public class FenetreJeu extends JFrame implements Observer{
             }
         });
 
-        joueurmatrice=new JPanel[Largeur][Hauteur];
-        advercairematrice=new JPanel[Largeur][Hauteur];
-        for(int i=0;i<Hauteur;i++){
-            for(int j=0;j<Largeur;j++){
+        joueurmatrice=new JPanel[Ressources.Largeur][Ressources.Hauteur];
+        advercairematrice=new JPanel[Ressources.Largeur][Ressources.Hauteur];
+        for(int i = 0; i< Ressources.Hauteur; i++){
+            for(int j = 0; j< Ressources.Largeur; j++){
                 joueurmatrice[i][j]=new JPanel();
                 joueurmatrice[i][j].setBackground(Color.BLUE);
-                joueurmatrice[i][j].setSize(CasTaille,CasTaille);
+                joueurmatrice[i][j].setSize(Ressources.CasTaille, Ressources.CasTaille);
                 joueurmatrice[i][j].setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
                 plateau_bateu.add(joueurmatrice[i][j]);
 
                 advercairematrice[i][j]=new JPanel();
-                advercairematrice[i][j].setSize(CasTaille,CasTaille);
+                advercairematrice[i][j].setSize(Ressources.CasTaille, Ressources.CasTaille);
                 advercairematrice[i][j].setBackground(Color.BLACK);
                 advercairematrice[i][j].setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
                 plateau_tire.add(advercairematrice[i][j]);
@@ -231,8 +221,8 @@ public class FenetreJeu extends JFrame implements Observer{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    System.out.println(ImageIO.read(new File(menu_bg_img))==null);
-                    g.drawImage(ImageIO.read(new File(menu_bg_img)), 0, 0, null);
+                    System.out.println(ImageIO.read(new File(Ressources.menu_bg_img))==null);
+                    g.drawImage(ImageIO.read(new File(Ressources.menu_bg_img)), 0, 0, null);
                 } catch (IOException ex) {
                     Logger.getLogger(FenetreJeu.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -244,7 +234,7 @@ public class FenetreJeu extends JFrame implements Observer{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File(menu_bg_img)), 0, 0, null);
+                    g.drawImage(ImageIO.read(new File(Ressources.menu_bg_img)), 0, 0, null);
                 } catch (IOException ex) {
                     Logger.getLogger(FenetreJeu.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -283,7 +273,7 @@ public class FenetreJeu extends JFrame implements Observer{
     }
     void construction(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        this.setPreferredSize(new Dimension(fenetreLargeur,fenetreHeauteur));
+        this.setPreferredSize(new Dimension(Ressources.fenetreLargeur, Ressources.fenetreHeauteur));
         setResizable(false);
         selecteur_fenetre = new JTabbedPane();
         selecteur_fenetre.setBackground(new java.awt.Color(243, 252, 253));
@@ -300,8 +290,8 @@ public class FenetreJeu extends JFrame implements Observer{
         selecteur_fenetre.setSelectedIndex(1);
         this.add(selecteur_fenetre);
 
-        selecteur_fenetre.setIconAt(0,new ImageIcon(jeu_icon));
-        selecteur_fenetre.setIconAt(1,new ImageIcon(menu_icon));
+        selecteur_fenetre.setIconAt(0,new ImageIcon(Ressources.jeu_icon));
+        selecteur_fenetre.setIconAt(1,new ImageIcon(Ressources.menu_icon));
         selecteur_fenetre.setBackgroundAt(0,Color.WHITE);
         selecteur_fenetre.setBackgroundAt(1,Color.WHITE);
         selecteur_fenetre.setForeground(Color.BLUE);
@@ -570,16 +560,16 @@ public class FenetreJeu extends JFrame implements Observer{
 
     private void joueurMatriceClick(java.awt.event.MouseEvent evt){
         if(etat==1){
-            int i=evt.getX()/(plateau_bateu.getWidth()/Largeur);
-            int j=evt.getY()/(plateau_bateu.getHeight()/Hauteur);
+            int i=evt.getX()/(plateau_bateu.getWidth()/ Ressources.Largeur);
+            int j=evt.getY()/(plateau_bateu.getHeight()/ Ressources.Hauteur);
             //System.out.println(i+" "+j);
             //joueurmatrice[j][i].setBackground(Color.red);
             String type=choix_bateux.getSelectedObjects()[0].toString();
             controleur.selecinnerunecase(i, j,type);
         }
         if(etat==2){
-            int i=evt.getX()/(plateau_bateu.getWidth()/Largeur);
-            int j=evt.getY()/(plateau_bateu.getHeight()/Hauteur);
+            int i=evt.getX()/(plateau_bateu.getWidth()/ Ressources.Largeur);
+            int j=evt.getY()/(plateau_bateu.getHeight()/ Ressources.Hauteur);
             //System.out.println(i+" "+j);
             //joueurmatrice[j][i].setBackground(Color.red);
             controleur.selecinner_cas_bateu_qui_tire(i, j);
@@ -587,8 +577,8 @@ public class FenetreJeu extends JFrame implements Observer{
     }
     private void adversaireMatriceClick(java.awt.event.MouseEvent evt){
         if(etat==3){
-            int i=evt.getX()/(plateau_tire.getWidth()/Largeur);
-            int j=evt.getY()/(plateau_tire.getHeight()/Hauteur);
+            int i=evt.getX()/(plateau_tire.getWidth()/ Ressources.Largeur);
+            int j=evt.getY()/(plateau_tire.getHeight()/ Ressources.Hauteur);
             //System.out.println(i+" "+j);
             //advercairematrice[j][i].setBackground(Color.GREEN);
             controleur.tirer_cas(i, j);
@@ -596,8 +586,8 @@ public class FenetreJeu extends JFrame implements Observer{
     }
     private void joueurMatriceFocuse(java.awt.event.MouseEvent evt){
         if(etat==2){
-            int i=evt.getX()/(plateau_tire.getWidth()/Largeur);
-            int j=evt.getY()/(plateau_tire.getHeight()/Hauteur);
+            int i=evt.getX()/(plateau_tire.getWidth()/ Ressources.Largeur);
+            int j=evt.getY()/(plateau_tire.getHeight()/ Ressources.Hauteur);
             String info=modele.getinfobateucase(i,j);
             if(info!=null)
                 descreptionBateuLabel.setText(info);
