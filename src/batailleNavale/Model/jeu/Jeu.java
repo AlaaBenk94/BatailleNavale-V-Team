@@ -1,6 +1,8 @@
 package batailleNavale.Model.jeu;
 
 
+import batailleNavale.Ressources;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -23,7 +25,7 @@ public class Jeu extends Observable {
         return etat;
     }
     public String[] getEpoqes(){
-        return new String[]{"ep1","ep2","ep3"};
+        return new String[]{Ressources.epoqueNom[0],Ressources.epoqueNom[1]};
     }
     public String[] getBateuTypes(){
         return new String[]{"bat1","bat2","bat3","bat4","bat5"};
@@ -36,34 +38,7 @@ public class Jeu extends Observable {
         setChanged();
         notifyObservers();
     }
-    public int[][]getBateauMatrice(){
-        int[][] mat = new int[10][10];
-        for(int i=0;i<10;i++){
-            for(int j=0;j<10;j++){
-                mat[i][j]=0;
-                if(j==5){
-                    if(i<5){
-                        for(int k=0;k<i;k++)mat[i][k]=i;
-                    }
-                }
-            }
-        }
-        return mat;
-    }
-    public int[][]getTireMatrice(){
-        int[][] mat = new int[10][10];
-        for(int i=0;i<10;i++){
-            for(int j=0;j<10;j++){
-                mat[i][j]=0;
-                if(j==5){
-                    if(i<5){
-                        for(int k=0;k<i;k++)mat[i][k]=1;
-                    }
-                }
-            }
-        }
-        return mat;
-    }
+
     private String sep="<br>";
     public Map<String, String> getBateuDescreption() {
         Map p=new HashMap();
