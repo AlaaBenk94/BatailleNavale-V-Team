@@ -4,10 +4,13 @@ package batailleNavale.Model.jeu;
 import batailleNavale.Controleur.Controleur;
 import batailleNavale.DaoSauvegarde.UsineSaveLoad;
 import batailleNavale.Model.Epoques.Epoque;
+import batailleNavale.Model.Joueur.Joueur;
+import batailleNavale.Model.Joueur.Plateau;
 import batailleNavale.Ressources;
 import batailleNavale.Vues.FenetreJeu;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,7 +22,8 @@ public class Jeu extends Observable implements Serializable {
     String nompartie;
     Epoque epoque;
     Ressources.Etats etat=Ressources.Etats.Menu;
-
+    Joueur joueur;
+    Plateau p;
 
     public void nouvellepartie(String nom, String epoque){
         System.out.println("new partie"+nom+" epoque "+epoque);
@@ -29,58 +33,62 @@ public class Jeu extends Observable implements Serializable {
         setChanged();
         notifyObservers();
     }
+
+
+
     public int[][]getBateauMatrice(){
-        int[][] mat = new int[10][10];
-        for(int i=0;i<10;i++){
-            for(int j=0;j<10;j++){
-                mat[i][j]=0;
-                if(j==5){
-                    if(i<5){
-                        for(int k=0;k<i;k++)mat[i][k]=i;
-                    }
-                }
-            }
-        }
+
+        int mat [][] = new int[Ressources.Hauteur][Ressources.Largeur];
+        mat=joueur.getMatriceBateau();
         return mat;
     }
     public int[][]getTireMatrice(){
-        int[][] mat = new int[10][10];
-        for(int i=0;i<10;i++){
-            for(int j=0;j<10;j++){
-                mat[i][j]=0;
-                if(j==5){
-                    if(i<5){
-                        for(int k=0;k<i;k++)mat[i][k]=1;
-                    }
-                }
-            }
-        }
+        int mat [][] = new int[Ressources.Hauteur][Ressources.Largeur];
+        mat=joueur.getMatriceBateau();
         return mat;
+
     }
-    private String sep="<br>";
+
     public String getinfobateucase(int x,int y){
-        if(x>5&&y>5)
-            return "<html> bat1nom  "+sep+" rest 20 projectile"+sep+"resistence 50 </html>";
-        else return "vide";
+
+         return p.getinfobateucase(x,y) ;
     }
 
     public void ajouter_le_Bateu_select(int[][] pos,String type_bat){
         etat= Ressources.Etats.Selection;
+        Point p1 = new Point(pos[0][0],pos[0][1]);
+        Point p2 = new Point(pos[1][0],pos[1][1]);
+        int typeBateua = Integer.valueOf(type_bat);
+        joueur.monterBateau(p1,p2,typeBateua);
         setChanged();
         notifyObservers();
-        System.out.println("placer le bateu selectionner");
+        System.out.println("bateu selectionner monte");
     }
     public void selecinner_cas_bateu_qui_tire(int x, int y){
         System.out.println("select "+x+","+y);
         etat=Ressources.Etats.Tire;
-        setChanged();
-        notifyObservers();
+        if(!p.estNoyer(x,y)) {
+            setChanged();
+            notifyObservers();
+            System.out.println("selection reussite !");
+        }
+        System.out.println("erreur de selection  : case noyee");
     }
     public void tirer_cas(int x, int y){
         System.out.println("tire "+x+","+y);
-        etat= Ressources.Etats.Selection;
-        setChanged();
-        notifyObservers();
+
+        if(joueur.attaquer(x,y)!=null) {
+            setChanged();
+            notifyObservers();
+            etat= Ressources.Etats.Selection;
+            System.out.println("attaque reussie");
+        }
+        else {
+            etat = Ressources.Etats.Tire;
+            System.out.println("attaque pas reussie");
+            System.out.println("rester dans l'etat"+etat);
+        }
+
     }
 
     ///////////////////////////////////////////////////////////

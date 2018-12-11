@@ -12,11 +12,12 @@ import batailleNavale.Ressources;
 
 import javax.tools.ToolProvider;
 import java.awt.*;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
-public class Plateau {
+public class Plateau implements Serializable {
 
     private int ChampBataille;
     String epoque;
@@ -100,7 +101,7 @@ public class Plateau {
      ** ce qui revien a verifier qu'on peut la choisir pour effectuer un tire
      */
 
-    private boolean estNoyer(int x, int y){
+    public boolean estNoyer(int x, int y){
         if((plateau [x][y]==null && plateau2[x][y]==false) || (plateau [x][y]!=null && plateau [x][y].get_res_Cas(x,y)<=0) ) return  true;
         return false;
     }
@@ -119,6 +120,22 @@ public class Plateau {
            return Ressources.casedesbateuau[bateau.getResistance()];
         }
     }
+    /*
+     ** recuperer les information de bateau
+     */
+
+    private String sep="<br>";
+    public String getinfobateucase(int x,int y){
+        Bateau bateau =plateau[x][y];
+        String batNom = bateau.getNom();
+        String nbProjectile = String.valueOf(bateau.getProjectiles());
+        String resistance = String.valueOf(bateau.get_res_Cas(x,y));
+
+        if(!estNoyer(x,y) && bateau!=null)
+            return "<html> batNom  "+sep+" nbProjectile"+sep+"resistance </html>";
+        else return "vide";
+    }
+
 
     public int getEtatCase(int x, int y){
         Bateau bateau =plateau[x][y];
@@ -199,7 +216,7 @@ public class Plateau {
 
 
     /**
-     * méthode qui permet de placer les bateau sur le plateau
+     * méthode qui permet de placer les bateau sur le plateau et de les créer aussi
      **/
 
 
@@ -223,6 +240,7 @@ public class Plateau {
                         plateau[mini][j] = b;
 
                     }
+
                 else if(p1.y==p2.y)
                     for(i=mini;i<mini+type;i++) {
                         plateau[i][minj] = b;
@@ -254,8 +272,10 @@ public class Plateau {
    public  static  void main(String [] args){
         Plateau plateau = Plateau.getInstance(Ressources.epoques[0]);
         plateau.poserBateau(new Point(1,1),new Point(1,4),Epoque1.TYPES[1]);
-        plateau.poserBateau(new Point(1,1),new Point(4,1),Epoque1.TYPES[1]);
+        //plateau.poserBateau(new Point(1,1),new Point(4,1),Epoque1.TYPES[1]);
         plateau.affichePlateu();
+       plateau.getinfobateucase(1,1);
+
 
     }
 

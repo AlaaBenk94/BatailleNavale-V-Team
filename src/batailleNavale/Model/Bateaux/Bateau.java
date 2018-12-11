@@ -93,7 +93,7 @@ public abstract class Bateau {
 	public int[] getCas() {
 		return cas;
 	}
-
+// retoutner la resistance d'une case se trouvant dans le tableau cas des cases
 	public int get_res_Cas(int x,int y) {
         int[] batcase = this.getCas();
         int[][] pos = this.getPosition();
