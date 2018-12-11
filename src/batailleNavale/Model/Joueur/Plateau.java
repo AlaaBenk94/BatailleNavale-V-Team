@@ -87,11 +87,11 @@ public class Plateau {
         if(p1.x>p2.x) mini=p2.x;
         if(p1.y>p2.y) minj=p2.y;
         if(p1.x==p2.x)
-            for(j=minj; j<=minj+type;j++)
+            for(j=minj; j<minj+type;j++)
                 if(plateau[mini][j]!=null) return true;
 
                 else if(p1.y==p2.y)
-                    for(i=mini;i<=mini+type;i++)
+                    for(i=mini;i<mini+type;i++)
                         if(plateau[i][minj]!=null) return true;
         return false;
     }
@@ -219,12 +219,12 @@ public class Plateau {
             if (!estOccupe(p1,p2,type)) {
                 Bateau b = Epoque.getEpoque(this.epoque).getBateau(type);
                 if(p1.x==p2.x)
-                    for(j=minj; j<=minj+type;j++) {
+                    for(j=minj; j<minj+type;j++) {
                         plateau[mini][j] = b;
 
                     }
                 else if(p1.y==p2.y)
-                    for(i=mini;i<=mini+type;i++) {
+                    for(i=mini;i<mini+type;i++) {
                         plateau[i][minj] = b;
 
                     }
@@ -239,11 +239,11 @@ public class Plateau {
         for(int i =0 ;i<plateau.length;i++) {
             System.out.println();
             for (int j = 0; j < plateau.length; j++) {
-             if(plateau[i][j]==null) {
-                 if (plateau2[i][j]) System.out.print("  B  ");
+             if(plateau[j][i]==null) {
+                 if (plateau2[j][i]) System.out.print("  B  ");
                  else System.out.print("  B  ");
              }else {
-                 System.out.print("  "+plateau[i][j].getType()+"  ");
+                 System.out.print("  "+plateau[j][i].getType()+"  ");
              }
             }
         }
@@ -254,6 +254,7 @@ public class Plateau {
    public  static  void main(String [] args){
         Plateau plateau = Plateau.getInstance(Ressources.epoques[0]);
         plateau.poserBateau(new Point(1,1),new Point(1,4),Epoque1.TYPES[1]);
+        plateau.poserBateau(new Point(1,1),new Point(4,1),Epoque1.TYPES[1]);
         plateau.affichePlateu();
 
     }
