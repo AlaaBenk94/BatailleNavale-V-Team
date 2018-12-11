@@ -22,8 +22,8 @@ public abstract class AbstractJoueur {
 		name = "Player";
 		myBoats = new ArrayList<>();
 		next = null;
-		myField = Plateau.getInstance();
-		enemyField = Plateau.getInstance();
+		//myField = Plateau.getInstance();      /////getInstence(epoque)
+		//enemyField = Plateau.getInstance();
 	}
 
 	/**
