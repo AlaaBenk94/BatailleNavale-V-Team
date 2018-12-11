@@ -88,4 +88,10 @@ public abstract class Bateau {
 
 	}
 
+	public int[] getCas() {
+		return cas;
+	}
+
+
+
 }

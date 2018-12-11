@@ -1,11 +1,12 @@
 package batailleNavale;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Cette classe contient tous les constants globales que nous utilisons.
  */
-public class Ressources {
+public class Ressources implements Serializable {
 
     public static final int PLATEAU_WIDTH = 10;
     public static final int PLATEAU_HEIGHT = 10;

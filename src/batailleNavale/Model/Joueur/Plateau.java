@@ -111,20 +111,31 @@ public class Plateau {
      */
 
     public int getEtatCase(int x, int y){
-        int etat=0;
-        for (int i=0;i<Ressources.Hauteur;i++)
-            for (int j =0;j<Ressources.Largeur;j++){
-                if(!plateau2[x][y])
-                    if(plateau[x][y].getResistance()<plateau[x][y].getType())
-                        //case touchee
-                        etat=1;
-                    else if(plateau[x][y]==null)
-                        // case bleu de la mer
-                        etat=2;
-                    // case brulee
-                etat=0;
+        Bateau bateau =plateau[x][y];
+        if(bateau==null){
+            if(plateau2[x][y])return Ressources.casedesTire[0];
+            else return Ressources.casedesTire[2];
+        }else{
+            int[]batcase =bateau.getCas();
+            int[][]pos=bateau.getPosition();
+            int ind =0;
+            if(pos[0][1]==pos[1][1]){
+                int minx=pos[0][0];if(pos[1][0]<minx)minx=pos[1][0];
+                ind = x-minx;
             }
-            return etat;
+            if(pos[0][0]==pos[1][0]){
+                int miny=pos[0][1];if(pos[1][1]<miny)miny=pos[1][1];
+                ind = y-miny;
+            }
+
+            if(batcase[ind]==0){
+                return Ressources.casedesTire[2];
+            }
+            if(batcase[ind]<bateau.getResistance()){
+                return Ressources.casedesTire[1];
+            }
+            return Ressources.casedesTire[0];
+        }
     }
 
     /*
