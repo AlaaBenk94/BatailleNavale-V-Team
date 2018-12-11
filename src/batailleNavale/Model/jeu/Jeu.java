@@ -1,6 +1,7 @@
 package batailleNavale.Model.jeu;
 
 
+import batailleNavale.Model.Epoques.Epoque;
 import batailleNavale.Ressources;
 
 import java.util.HashMap;
@@ -10,9 +11,11 @@ import java.util.Observable;
 
 
 public class Jeu extends Observable {
-    int etat=0;
+    Epoque epoque;
+    Ressources.Etats etat=Ressources.Etats.Menu;
     LinkedList<Integer[]> cas_selectionner=new LinkedList<>() ;
-    public void setetat(int etat){
+
+    public void setetat(Ressources.Etats etat){
         this.etat=etat;
         setChanged();
         notifyObservers();
@@ -21,30 +24,55 @@ public class Jeu extends Observable {
     public LinkedList<Integer[]> getCas_selectionner() {
         return cas_selectionner;
     }
-    public int getetat(){
+    public Ressources.Etats getetat(){
         return etat;
     }
     public String[] getEpoqes(){
-        return new String[]{Ressources.epoqueNom[0],Ressources.epoqueNom[1]};
+        return Ressources.epoques;
     }
     public String[] getBateuTypes(){
-        return new String[]{"bat1","bat2","bat3","bat4","bat5"};
+        // System.out.println("eep null "+epoque==null);
+        return epoque.getBateauType();
     }
-
 
     public void nouvellepartie(String nom, String epoque){
         System.out.println("new partie"+nom+" epoque "+epoque);
-        etat=1;
+        this.epoque=Epoque.getEpoque(epoque);
+        etat=Ressources.Etats.Placement;
         setChanged();
         notifyObservers();
     }
-
+    public int[][]getBateauMatrice(){
+        int[][] mat = new int[10][10];
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                mat[i][j]=0;
+                if(j==5){
+                    if(i<5){
+                        for(int k=0;k<i;k++)mat[i][k]=i;
+                    }
+                }
+            }
+        }
+        return mat;
+    }
+    public int[][]getTireMatrice(){
+        int[][] mat = new int[10][10];
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                mat[i][j]=0;
+                if(j==5){
+                    if(i<5){
+                        for(int k=0;k<i;k++)mat[i][k]=1;
+                    }
+                }
+            }
+        }
+        return mat;
+    }
     private String sep="<br>";
     public Map<String, String> getBateuDescreption() {
-        Map p=new HashMap();
-        p.put("bat1","<html> bat1nom  "+sep+"  eppoque ep1  "+sep+" nb projectile 20 "+sep+" resistence 50 </html>");
-        p.put("bat2","<html> bat2nom"+sep+"eppoque ep2 "+sep+" nb projectile 40  "+sep+" resistence 100 </html>");
-        return p;
+        return epoque.getBateuDescreption();
     }
 
     public String getinfobateucase(int x,int y){
@@ -53,37 +81,27 @@ public class Jeu extends Observable {
         else return "vide";
     }
 
-    //select la 1ere et la 2eme case d'un bateu a placer
-    public void selecinnerunecase(int x, int y, String type_bat){
-        if(true){///verification si on peut selecionner la case x,y
-            System.out.println("select a placer "+x+","+y);
-            Integer[] p=new Integer[2];
-            p[0]=x;p[1]=y;
-            cas_selectionner.add(p);
-        }
-        //mat i,j =0 case selectionner
-        setChanged();
-        notifyObservers();
-
-    }
-
-    public void ajouter_le_Bateu_select(){
-        etat=2;
+    public void ajouter_le_Bateu_select(int[][] pos,String type_bat){
+        etat= Ressources.Etats.Selection;
         setChanged();
         notifyObservers();
         System.out.println("placer le bateu selectionner");
     }
     public void selecinner_cas_bateu_qui_tire(int x, int y){
         System.out.println("select "+x+","+y);
-        etat=3;
+        etat=Ressources.Etats.Tire;
         setChanged();
         notifyObservers();
     }
     public void tirer_cas(int x, int y){
         System.out.println("tire "+x+","+y);
-        etat=2;
+        etat= Ressources.Etats.Selection;
         setChanged();
         notifyObservers();
+    }
+
+    public Epoque getEpoque() {
+        return epoque;
     }
 
 }

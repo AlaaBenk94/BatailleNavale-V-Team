@@ -2,22 +2,17 @@ package batailleNavale.Model.Epoques;
 
 import batailleNavale.Model.Bateaux.Bateau;
 import batailleNavale.Model.Bateaux.BateauEP1;
+import batailleNavale.Ressources;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Epoque2 extends Epoque {
-    public  static final String NOMEPOQUE="EP2";
-    public  static final String NOMTYPE1="TYPE1";
-    public  static final String NOMTYPE2="TYPE2";
-    public  static final String NOMTYPE3="TYPE3";
-    public  static final int TYPE1=2;
-    public  static final int TYPE2=3;
-    public  static final int TYPE3=5;
-    public  static final int FORCE1=2;
-    public  static final int FORCE2=3;
-    public  static final int FORCE3=3;
-    public  static final int RESISTANCE1=2;
-    public  static final int RESISTANCE2=3;
-    public  static final int RESISTANCE3=3;
-
+    public  static final String NOMEPOQUE= Ressources.epoques[1];
+    public  static final String[] NOMTYPES={"TYPE1","TYPE2","TYPE3"};
+    public  static final int[] TYPES={2,3,5};
+    public  static final int[] FORCES={2,3,5};
+    public  static final int[] RESISTANCES={2,3,3};
 
     private static Epoque epoque2;
     private Epoque2(){};
@@ -26,12 +21,45 @@ public class Epoque2 extends Epoque {
         return epoque2;
     }
 
+    @Override
     public Bateau getBateau(int type) {
-        switch (type){
-            case TYPE1: return new BateauEP1(NOMTYPE1,NOMEPOQUE,TYPE1,FORCE1,RESISTANCE1);
-            case TYPE2: return new BateauEP1(NOMTYPE2,NOMEPOQUE,TYPE2,FORCE2,RESISTANCE2);
-            case TYPE3: return new BateauEP1(NOMTYPE3,NOMEPOQUE,TYPE3,FORCE3,RESISTANCE3);
-        }
+        if(type== TYPES[0])return new BateauEP1(NOMTYPES[0],NOMEPOQUE,TYPES[0],FORCES[0],RESISTANCES[0]);
+        if(type== TYPES[1])return new BateauEP1(NOMTYPES[1],NOMEPOQUE,TYPES[1],FORCES[1],RESISTANCES[1]);
+        if(type== TYPES[2])return new BateauEP1(NOMTYPES[2],NOMEPOQUE,TYPES[2],FORCES[2],RESISTANCES[2]);
         return null;
+    }
+
+    private String sep="<br>";
+    @Override
+    public Map<String, String> getBateuDescreption() {
+        Map p=new HashMap();
+        for (int i=0 ;i<NOMTYPES.length;i++){
+            String key =NOMTYPES[i];
+            String descreption="<html>";
+            descreption+="nom :"+sep+NOMTYPES[i]+sep+sep;
+            descreption+="epoque :"+sep+NOMEPOQUE+sep+sep;
+            descreption+="nbr projectile :"+sep+FORCES[i]+sep+sep;
+            descreption+="resistence :"+sep+RESISTANCES[i]+sep+sep;
+            descreption+="taille :"+sep+TYPES[i]+sep+sep;
+            descreption+="</html>";
+            p.put(key,descreption);
+
+        }
+        return p;
+    }
+
+    @Override
+    public String[] getBateauType() {
+        return NOMTYPES;
+    }
+    @Override
+    public int getBateauTaille(String nom){
+        for (int i=0;i<NOMTYPES.length;i++)
+            if(nom.equals(NOMTYPES[i]))return TYPES[i];
+        return 0;
+    }
+    @Override
+    public String getNom() {
+        return NOMEPOQUE;
     }
 }

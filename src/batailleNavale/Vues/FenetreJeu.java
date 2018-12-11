@@ -1,6 +1,7 @@
 package batailleNavale.Vues;
 
 import batailleNavale.Controleur.Controleur;
+import batailleNavale.Model.Epoques.Epoque;
 import batailleNavale.Model.jeu.Jeu;
 import batailleNavale.Ressources;
 
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -29,7 +31,7 @@ public class FenetreJeu extends JFrame implements Observer{
     private Jeu modele;
     private Controleur controleur;
 
-    private int etat=0;
+    private Ressources.Etats etat= Ressources.Etats.Menu;
     private JTabbedPane selecteur_fenetre;
     private JPanel jeu_section, plateau_bateu,barre_jeu, plateau_tire, menu_section,menu,menuprincipale,menucontenu;
     private JScrollPane menupanel;
@@ -40,7 +42,9 @@ public class FenetreJeu extends JFrame implements Observer{
     private JButton ajouter;
     private JTextField nomsauvgarder;
     private Map<String,String> descreptions;
-    
+    private LinkedList<int[]> caseselectioner;
+    private LinkedList<int[]> caseposibles;
+
     public FenetreJeu(Jeu jeu, Controleur controleur){
         this.modele=jeu;
         this.controleur=controleur;
@@ -67,9 +71,11 @@ public class FenetreJeu extends JFrame implements Observer{
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        caseposibles =new LinkedList<>();
+        caseselectioner=new LinkedList<>();
     }
 
-    void jeuconstruction(){
+    private void jeuconstruction(){
         jeu_section = new javax.swing.JPanel();
         plateau_bateu = new javax.swing.JPanel();
         barre_jeu = new javax.swing.JPanel(){
@@ -160,6 +166,11 @@ public class FenetreJeu extends JFrame implements Observer{
             public void actionPerformed(ActionEvent e) {
                 String desc =String.valueOf(descreptions.get(choix_bateux.getSelectedItem()));
                 descreptionBateuLabel.setText(desc);
+                caseselectioner.clear();
+                upDateMatrice(modele.getBateauMatrice(),modele.getTireMatrice());
+                lescaseposibles();
+                update_case_desponible();
+
             }
         });
 
@@ -215,7 +226,7 @@ public class FenetreJeu extends JFrame implements Observer{
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
-    void menuconstruction(){
+    private void menuconstruction(){
         menu_section = new javax.swing.JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -271,7 +282,7 @@ public class FenetreJeu extends JFrame implements Observer{
         );
 
     }
-    void construction(){
+    private void construction(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.setPreferredSize(new Dimension(Ressources.fenetreLargeur, Ressources.fenetreHeauteur));
         setResizable(false);
@@ -307,7 +318,7 @@ public class FenetreJeu extends JFrame implements Observer{
 
     }
 
-    void construction_de_menu_principale(){
+    private void construction_de_menu_principale(){
         menuprincipale = new javax.swing.JPanel();
         JButton nouvelle = new javax.swing.JButton();
         JButton charger = new javax.swing.JButton();
@@ -358,7 +369,7 @@ public class FenetreJeu extends JFrame implements Observer{
                                 .addContainerGap(85, Short.MAX_VALUE))
         );
     }
-    void aller_menu_newpartie(String[] epoques){
+    private void aller_menu_newpartie(String[] epoques){
         JPanel mjPanel1 = new javax.swing.JPanel();
         JButton mjButton1 = new javax.swing.JButton();
         JPanel mjPanel2 = new javax.swing.JPanel();
@@ -478,7 +489,7 @@ public class FenetreJeu extends JFrame implements Observer{
         menucontenu.updateUI();
     }
 
-    void aller_menu_sauvgarder(){
+    private void aller_menu_sauvgarder(){
 
         JPanel savepanel = new javax.swing.JPanel();
         JButton save = new javax.swing.JButton();
@@ -558,16 +569,107 @@ public class FenetreJeu extends JFrame implements Observer{
         menucontenu.updateUI();
     }
 
+
+
+    private void selecinnerunecase(int x,int y){
+        if(caseselectioner.size()==2){
+            caseselectioner.remove(0);
+            lescaseposibles();
+        }
+        if(est_desponible(x,y)) {
+            caseselectioner.add(new int[] {x,y});
+        }
+        upDateMatrice(modele.getBateauMatrice(),modele.getTireMatrice());
+        lescaseposibles();
+        update_case_desponible();
+    }
+    private void lescaseposibles(){
+        int[][] matriceBateau = modele.getBateauMatrice();
+        String batteaukey=choix_bateux.getSelectedObjects()[0].toString();
+        int tailledebat= modele.getEpoque().getBateauTaille(batteaukey);
+        caseposibles.clear();
+        if(caseselectioner.size()==0){
+            for(int i=0;i<matriceBateau.length;i++)
+                for(int j=0;j<matriceBateau.length;j++) {
+                    if(verification_une_case(matriceBateau,i,j,tailledebat)){
+                        caseposibles.add(new int[]{i,j});
+                    }
+                }
+
+        }
+        if(caseselectioner.size()==1){
+            int i=caseselectioner.get(0)[0];
+            int j=caseselectioner.get(0)[1];
+            if(i-tailledebat>=0&&!traversse_bateu(matriceBateau,i,j,i-tailledebat,j)){
+                caseposibles.add(new int[]{i-tailledebat,j});
+            }
+            if(i+tailledebat<matriceBateau.length&&!traversse_bateu(matriceBateau,i,j,i+tailledebat,j)){
+                caseposibles.add(new int[]{i+tailledebat,j});
+            }
+            if(j-tailledebat>=0&&!traversse_bateu(matriceBateau,i,j,i,j-tailledebat)){
+                caseposibles.add(new int[]{i,j-tailledebat});
+            }
+            if(j+tailledebat<matriceBateau.length&&!traversse_bateu(matriceBateau,i,j,i,j+tailledebat)){
+                caseposibles.add(new int[]{i,j+tailledebat});
+            }
+        }
+
+    }
+    private boolean verification_une_case(int[][] matrice,int x ,int y ,int taille){
+        return (( matrice.length>x+taille && !traversse_bateu(matrice,x,y,x+taille,y) )||
+                (x-taille>=0&&!traversse_bateu(matrice,x-taille,y,x,y))||
+                (matrice.length>y+taille&&!traversse_bateu(matrice,x,y+taille,x,y))||
+                (y-taille>=0&&!traversse_bateu(matrice,x,y-taille,x,y)))
+                &&(matrice[x][y]==Ressources.casedesbateuau[0]);
+    }
+    private boolean traversse_bateu(int[][] matrice,int x1 ,int y1,int x2 ,int y2){
+        if(y1==y2){
+            int min=x1;if(x2<x1)min=x2;
+            int max=x1;if(x2>x1)max=x2;
+            for(int i=min;i<max;i++)
+                if(matrice[i][y1]!=Ressources.casedesbateuau[0])
+                    return true;
+        }
+        if(x1==x2){
+            int min=y1;if(y2<y1)min=y2;
+            int max=y1;if(y2>y1)max=y2;
+            for(int i=min;i<max;i++)
+                if(matrice[x1][i]!=Ressources.casedesbateuau[0])
+                    return true;
+        }
+        return false;
+    }
+    private boolean est_desponible(int x,int y){
+        if(caseposibles==null)return false;
+        for(int i=0;i<caseposibles.size();i++){
+            if(caseposibles.get(i)[0]==x&&caseposibles.get(i)[1]==y)return true;
+        }
+        return false;
+    }
+    private void update_case_desponible(){
+        for (int[] p : caseposibles ){
+            joueurmatrice[p[0]][p[1]].setBackground(Ressources.ChoixColor);
+        }
+        for (int[] p : caseselectioner ){
+            joueurmatrice[p[0]][p[1]].setBackground(Ressources.SelectColor);
+        }
+
+    }
+
+
+
+
+
+
     private void joueurMatriceClick(java.awt.event.MouseEvent evt){
-        if(etat==1){
+        if(etat==Ressources.Etats.Placement){
             int i=evt.getX()/(plateau_bateu.getWidth()/ Ressources.Largeur);
             int j=evt.getY()/(plateau_bateu.getHeight()/ Ressources.Hauteur);
             //System.out.println(i+" "+j);
             //joueurmatrice[j][i].setBackground(Color.red);
-            String type=choix_bateux.getSelectedObjects()[0].toString();
-            controleur.selecinnerunecase(i, j,type);
+            selecinnerunecase(j,i);
         }
-        if(etat==2){
+        if(etat==Ressources.Etats.Selection){
             int i=evt.getX()/(plateau_bateu.getWidth()/ Ressources.Largeur);
             int j=evt.getY()/(plateau_bateu.getHeight()/ Ressources.Hauteur);
             //System.out.println(i+" "+j);
@@ -576,7 +678,7 @@ public class FenetreJeu extends JFrame implements Observer{
         }
     }
     private void adversaireMatriceClick(java.awt.event.MouseEvent evt){
-        if(etat==3){
+        if(etat==Ressources.Etats.Tire){
             int i=evt.getX()/(plateau_tire.getWidth()/ Ressources.Largeur);
             int j=evt.getY()/(plateau_tire.getHeight()/ Ressources.Hauteur);
             //System.out.println(i+" "+j);
@@ -585,7 +687,7 @@ public class FenetreJeu extends JFrame implements Observer{
         }
     }
     private void joueurMatriceFocuse(java.awt.event.MouseEvent evt){
-        if(etat==2){
+        if(etat==Ressources.Etats.Selection){
             int i=evt.getX()/(plateau_tire.getWidth()/ Ressources.Largeur);
             int j=evt.getY()/(plateau_tire.getHeight()/ Ressources.Hauteur);
             String info=modele.getinfobateucase(i,j);
@@ -606,7 +708,7 @@ public class FenetreJeu extends JFrame implements Observer{
 
 
     private void selecteurEtat(ChangeEvent evt) {
-        if(etat==0) selecteur_fenetre.setSelectedIndex(selecteur_fenetre.getTabCount()-1);
+        if(etat==Ressources.Etats.Menu) selecteur_fenetre.setSelectedIndex(selecteur_fenetre.getTabCount()-1);
     }
 
     void demarerNouvellePartie(String nom ,String epoque){
@@ -614,7 +716,12 @@ public class FenetreJeu extends JFrame implements Observer{
     }
 
     private void ajouterClick(ActionEvent evt) {
-        controleur.ajouter_le_Bateu_select();
+        if(caseselectioner.size()==2) {
+            int[][] pos = new int[][]{caseselectioner.get(0), caseselectioner.get(1)};
+            String battype=choix_bateux.getSelectedItem().toString();
+            controleur.ajouter_le_Bateu_select(pos,battype);
+        }
+        caseselectioner.clear();
     }
 
     void sauvgarder(){
@@ -623,31 +730,25 @@ public class FenetreJeu extends JFrame implements Observer{
         controleur.sauvgarder(lien);
     }
 
-    public void ubdateMatrice(int [][] matriceBateau ,int[][] matriceTire ){
+    public void upDateMatrice(int [][] matriceBateau , int[][] matriceTire ){
         for(int i=0;i<matriceBateau.length;i++)
             for(int j=0;j<matriceBateau.length;j++){
-                if(matriceBateau[i][j]==0) joueurmatrice[i][j].setBackground(Color.decode("#003366"));
-                if(matriceBateau[i][j]==1) joueurmatrice[i][j].setBackground(Color.RED);
-                if(matriceBateau[i][j]==2) joueurmatrice[i][j].setBackground(Color.BLACK);
-                if(matriceBateau[i][j]==3) joueurmatrice[i][j].setBackground(Color.YELLOW);
-                if(matriceBateau[i][j]==4) joueurmatrice[i][j].setBackground(Color.GREEN);
-                if(matriceBateau[i][j]==5) joueurmatrice[i][j].setBackground(Color.GRAY);
-
+                int etat=matriceBateau[i][j];
+                joueurmatrice[i][j].setBackground(Ressources.casedesbateuaucolors[etat]);
             }
         for(int i=0;i<matriceTire.length;i++)
             for(int j=0;j<matriceTire.length;j++){
-                if(matriceTire[i][j]==0) advercairematrice[i][j].setBackground(Color.decode("#003366"));
-                if(matriceTire[i][j]==1) advercairematrice[i][j].setBackground(Color.red);
+                int etat=matriceTire[i][j];
+                advercairematrice[i][j].setBackground(Ressources.casedestirecolor[etat]);
             }
     }
-
 
     @Override
     public void update(Observable o, Object arg) {
         etat=modele.getetat();
         System.out.println("etat :"+etat);
-        if(etat==1){
-            ubdateMatrice(modele.getBateauMatrice(),modele.getTireMatrice());
+        if(etat==Ressources.Etats.Placement){
+            upDateMatrice(modele.getBateauMatrice(),modele.getTireMatrice());
             selecteur_fenetre.setSelectedIndex(0);
             String[] typebat = modele.getBateuTypes();
             descreptions=modele.getBateuDescreption();
@@ -658,9 +759,11 @@ public class FenetreJeu extends JFrame implements Observer{
             choix_bateux.setVisible(true);
             ajouter.setVisible(true);
             aller_menu_sauvgarder();
+            lescaseposibles();
+            update_case_desponible();
         }
-        if(etat==2||etat==3){
-            ubdateMatrice(modele.getBateauMatrice(),modele.getTireMatrice());
+        if(etat==Ressources.Etats.Selection||etat==Ressources.Etats.Tire){
+            upDateMatrice(modele.getBateauMatrice(),modele.getTireMatrice());
             selecteur_fenetre.setSelectedIndex(0);
             String[] typebat = modele.getBateuTypes();
             descreptions=modele.getBateuDescreption();
@@ -668,7 +771,7 @@ public class FenetreJeu extends JFrame implements Observer{
             ajouter.setVisible(false);
             aller_menu_sauvgarder();
         }
-        if(etat==4){
+        if(etat==Ressources.Etats.Fermer){
             setVisible(false);
             dispose();
         }
@@ -693,26 +796,6 @@ public class FenetreJeu extends JFrame implements Observer{
         }
         return lien;
     }
-
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-//         */
-
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                Jeu j = new Jeu();
-//                FenetreJeu b=new FenetreJeu(j,new Controleur(j));
-//                b.setVisible(true);
-//
-//            }
-//        });
-//    }
 
 
 }
