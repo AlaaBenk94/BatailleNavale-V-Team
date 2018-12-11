@@ -6,7 +6,7 @@ import java.io.*;
 
 public class SaveLoadSerial extends DAOSaveLoad {
     private static SaveLoadSerial saveLoadSerial;
-    private String nom="jeu.ser";
+    private String ext=".ser";
 
     private SaveLoadSerial(){}
     public static DAOSaveLoad getInstentce(){
@@ -19,7 +19,7 @@ public class SaveLoadSerial extends DAOSaveLoad {
         ObjectOutputStream os = null ;
         FileOutputStream file= null;
         try {
-            file = new FileOutputStream(chemin+nom);
+            file = new FileOutputStream(chemin+ext);
             os=new ObjectOutputStream(file);
             os.writeObject(jeu);
             os.flush();
@@ -37,7 +37,7 @@ public class SaveLoadSerial extends DAOSaveLoad {
         FileInputStream fichier = null;
         Jeu jeu=null;
         try {
-            fichier = new FileInputStream(chemin+nom);
+            fichier = new FileInputStream(chemin);
             ObjectInputStream ois = new ObjectInputStream(fichier);
             jeu = (Jeu) ois.readObject();
             fichier.close();

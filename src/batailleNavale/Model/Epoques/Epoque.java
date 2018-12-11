@@ -2,10 +2,11 @@ package batailleNavale.Model.Epoques;
 
 import batailleNavale.Model.Bateaux.Bateau;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Epoque {
+public abstract class Epoque implements Serializable {
 	private String siecle;
 
 	public  static Epoque getEpoque(String siecle){

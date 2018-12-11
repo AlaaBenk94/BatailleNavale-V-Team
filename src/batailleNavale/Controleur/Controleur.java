@@ -1,6 +1,10 @@
 package batailleNavale.Controleur;
 
 import batailleNavale.Model.jeu.Jeu;
+import batailleNavale.Ressources;
+import batailleNavale.Vues.FenetreJeu;
+
+import javax.swing.*;
 
 public class Controleur {
     private Jeu modele;
@@ -11,11 +15,11 @@ public class Controleur {
     public void nouvellepartie(String nom ,String epoque){
         modele.nouvellepartie(nom, epoque);
     }
-    public void chargerpartie(String lien){
-        System.out.print(lien);
+    public void chargerpartie(String lien, FenetreJeu fenetre){
+        modele.chargerpartie(lien,fenetre);
     }
     public void sauvgarder(String lien){
-        System.out.print(lien);
+      modele.sauvgarder(lien);
     }
     public void ajouter_le_Bateu_select(int[][] pos,String type_bat){
         modele.ajouter_le_Bateu_select(pos,type_bat);
