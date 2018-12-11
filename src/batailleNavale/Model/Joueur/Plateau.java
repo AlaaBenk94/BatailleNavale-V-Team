@@ -7,24 +7,27 @@ import batailleNavale.Model.Bateaux.Bateau;
 import batailleNavale.Model.Bateaux.BateauEP1;
 import batailleNavale.Model.Bateaux.Tire;
 import batailleNavale.Model.Epoques.Epoque;
+import batailleNavale.Model.Epoques.Epoque1;
 import batailleNavale.Ressources;
 
 import javax.tools.ToolProvider;
 import java.awt.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
 public class Plateau {
 
     private int ChampBataille;
+    String epoque;
     Bateau plateau [][];
     boolean plateau2 [][]; // matrice sur laquelle on verifie si la case est noyer ou pas (si elle est completement brulee)
 
     private boolean tirePossible; // pour savoir si on peu choisir une case pour tirer ou non
 
 
-    public Plateau(){
-
+    public Plateau(String epoque){
+        this.epoque =epoque;
         plateau = new Bateau[Ressources.Hauteur][Ressources.Largeur];
         plateau2 = new boolean[Ressources.Hauteur][Ressources.Largeur];
 
@@ -42,9 +45,8 @@ public class Plateau {
      * cette methode crée les instances Plateau pour nous.
      * @return une instance de Plateau.
      */
-    public static Plateau getInstance() {
-
-        return new Plateau();
+    public static Plateau getInstance(String epoque) {
+ return new Plateau(epoque);
     }
 
 
@@ -83,14 +85,13 @@ public class Plateau {
     boolean estOccupe(Point p1, Point p2,int type){
         int i,j,mini=p1.x,minj=p1.y;
         if(p1.x>p2.x) mini=p2.x;
-
-        if(p1.y>p2.y)minj= p2.y;
+        if(p1.y>p2.y) minj=p2.y;
         if(p1.x==p2.x)
-            for(j=minj; j<=type;j++)
+            for(j=minj; j<=minj+type;j++)
                 if(plateau[mini][j]!=null) return true;
 
                 else if(p1.y==p2.y)
-                    for(i=mini;i<=type;i++)
+                    for(i=mini;i<=mini+type;i++)
                         if(plateau[i][minj]!=null) return true;
         return false;
     }
@@ -100,8 +101,7 @@ public class Plateau {
      */
 
     private boolean estNoyer(int x, int y){
-
-        if((plateau [x][y]==null && plateau2[x][y]!=true) || (plateau [x][y]!=null && plateau2[x][y]!=true) ) return  true;
+        if((plateau [x][y]==null && plateau2[x][y]==false) || (plateau [x][y]!=null && plateau [x][y].get_res_Cas(x,y)<=0) ) return  true;
         return false;
     }
 
@@ -110,28 +110,26 @@ public class Plateau {
     ** etat=-1 lorsque la case et une case mer brulee ou noyee et etat=0 si la case mer est true
      */
 
+    public int getResisteceCase(int x, int y){
+        Bateau bateau =plateau[x][y];
+        if(bateau==null){
+            if(plateau2[x][y])return Ressources.casedesbateuau[1];
+            else return Ressources.casedesbateuau[0];
+        }else{
+           return Ressources.casedesbateuau[bateau.getResistance()];
+        }
+    }
+
     public int getEtatCase(int x, int y){
         Bateau bateau =plateau[x][y];
         if(bateau==null){
             if(plateau2[x][y])return Ressources.casedesTire[0];
             else return Ressources.casedesTire[2];
         }else{
-            int[]batcase =bateau.getCas();
-            int[][]pos=bateau.getPosition();
-            int ind =0;
-            if(pos[0][1]==pos[1][1]){
-                int minx=pos[0][0];if(pos[1][0]<minx)minx=pos[1][0];
-                ind = x-minx;
-            }
-            if(pos[0][0]==pos[1][0]){
-                int miny=pos[0][1];if(pos[1][1]<miny)miny=pos[1][1];
-                ind = y-miny;
-            }
-
-            if(batcase[ind]==0){
+            if(bateau.get_res_Cas(x,y)==0){
                 return Ressources.casedesTire[2];
             }
-            if(batcase[ind]<bateau.getResistance()){
+            if(bateau.get_res_Cas(x,y)<bateau.getResistance()){
                 return Ressources.casedesTire[1];
             }
             return Ressources.casedesTire[0];
@@ -142,17 +140,15 @@ public class Plateau {
     ** matrice d'etat des cases du plateau du joueur
      */
 
-    public int[][]getBateauMatrice(){
-        int[][] mat = new int[10][10];
-        for(int i=0;i<Ressources.Hauteur;i++){
-            for(int j=0;j<Ressources.Largeur;j++){
-                mat[i][j]=getEtatCase(i,j);
-
+    public int[][]getBateauMatrice() {
+        int[][] mat = new int[Ressources.Largeur][Ressources.Hauteur];
+        for (int i = 0; i < Ressources.Hauteur; i++) {
+            for (int j = 0; j < Ressources.Largeur; j++) {
+                mat[i][j] = getResisteceCase(i, j);
             }
         }
-        return mat;
+            return mat;
     }
-
     /*
     ** matrice d'etat des cases du joueur adversaire
      */
@@ -161,9 +157,7 @@ public class Plateau {
         int[][] mat = new int[Ressources.Hauteur][Ressources.Largeur];
         for(int i=0;i<Ressources.Hauteur;i++){
             for(int j=0;j<Ressources.Largeur;j++){
-                if(plateau[i][j].getResistance()==0 || plateau2[i][j]==false)
-                    mat[i][j]=0;
-                mat[i][j]=plateau[i][j].getResistance();
+                mat[i][j]=getEtatCase(i,j);
             }
         }
         return mat;
@@ -176,18 +170,18 @@ public class Plateau {
      * dans le cas ou la case une case mere, pour la difirencier de la cae bateau ou la mets a false pour interdir de tirer une autre fois sur cette case
      **/
     public int  prendTire(Tire tire){
-        int t;
         int x = tire.getPositionCible()[0];
         int y = tire.getPositionCible()[1];
         if(!estNoyer(x, y)) {
-            plateau[x][y].preandFeu(tire);
-            t=1;
+            if(plateau[x][y]==null){
+                plateau2[x][y] = false;
+                return 1;
+            }else {
+                plateau[x][y].preandFeu(tire);
+                return 1;
+            }
         }
-        else {
-            plateau2[x][y] = false;
-            t=-1;
-        }
-        return t;
+        return -1;
     }
 
     /**
@@ -196,15 +190,10 @@ public class Plateau {
 
 
     public Tire tirer(int x, int y){
-        Tire tire = null;
-        if(!estNoyer(x,y))
-            tire= new Tire(tire.getTireur(),tire.getForce(),new int[]{x, y});
-
-
-        tirePossible=false;
-
-        return tire;
-
+        if(!estNoyer(x,y)&&plateau[x][y]!=null){
+         return plateau[x][y].tirer(x,y);
+        }
+        return null;
     }
 
 
@@ -214,11 +203,8 @@ public class Plateau {
      **/
 
 
-    public  void poserBateau(Bateau b) {
+    public Bateau poserBateau(Point p1 , Point p2, int type) {
         //ccondition a verifier pour pouvoir poser un bateau
-        b.getPosition();
-        Point p1 = new Point(b.getPosition()[0][0],b.getPosition()[0][1]);
-        Point p2 = new Point(b.getPosition()[1][0],b.getPosition()[1][1]);
 
         int i,j,mini,minj;
 
@@ -230,34 +216,48 @@ public class Plateau {
 
 
         if(!estDeborde(p1,p2) && !estHV(p1,p2)){
-            if (!estOccupe(p1,p2,b.getType())) {
+            if (!estOccupe(p1,p2,type)) {
+                Bateau b = Epoque.getEpoque(this.epoque).getBateau(type);
                 if(p1.x==p2.x)
-                    for(j=minj; j<=b.getType();j++) {
+                    for(j=minj; j<=minj+type;j++) {
                         plateau[mini][j] = b;
 
                     }
                 else if(p1.y==p2.y)
-                    for(i=p1.y;i<=b.getType();i++) {
+                    for(i=mini;i<=mini+type;i++) {
                         plateau[i][minj] = b;
 
                     }
+                return b;
             }
-
         }
 
+        return null;
+    }
+
+    void  affichePlateu(){
+        for(int i =0 ;i<plateau.length;i++) {
+            System.out.println();
+            for (int j = 0; j < plateau.length; j++) {
+             if(plateau[i][j]==null) {
+                 if (plateau2[i][j]) System.out.print("  B  ");
+                 else System.out.print("  B  ");
+             }else {
+                 System.out.print("  "+plateau[i][j].getType()+"  ");
+             }
+            }
+        }
     }
 
 
 
-//    public  static  void main(String [] args){
-//        Plateau plateau = Plateau.getInstance();
-//
-//        Bateau b1 = new BateauEP1("Croiseur","EP1",2,2,1);
-//        b1.setPosition(new int[][]{
-//                {1,1},
-//                {1,4}
-//        });
-//        plateau.poserBateau(b1);
-//    }
+   public  static  void main(String [] args){
+        Plateau plateau = Plateau.getInstance(Ressources.epoques[0]);
+        plateau.poserBateau(new Point(1,1),new Point(1,4),Epoque1.TYPES[1]);
+        plateau.affichePlateu();
+
+    }
+
+
 
 }

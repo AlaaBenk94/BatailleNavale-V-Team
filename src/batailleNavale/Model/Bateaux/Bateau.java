@@ -1,5 +1,7 @@
 package batailleNavale.Model.Bateaux;
 
+import batailleNavale.Ressources;
+
 public abstract class Bateau {
 
 	protected int[][] position;
@@ -92,6 +94,22 @@ public abstract class Bateau {
 		return cas;
 	}
 
+	public int get_res_Cas(int x,int y) {
+        int[] batcase = this.getCas();
+        int[][] pos = this.getPosition();
+        int ind = 0;
+        if (pos[0][1] == pos[1][1]) {
+            int minx = pos[0][0];
+            if (pos[1][0] < minx) minx = pos[1][0];
+            ind = x - minx;
+        }
+        if (pos[0][0] == pos[1][0]) {
+            int miny = pos[0][1];
+            if (pos[1][1] < miny) miny = pos[1][1];
+            ind = y - miny;
+        }
+        return cas[ind];
+    }
 
 
 }
