@@ -23,7 +23,7 @@ public class Ressources implements Serializable {
     public static final String jeu_icon= "src/batailleNavale/img_ressource/jeuicon.png";
     public static final String menu_icon= "src/batailleNavale/img_ressource/menuicon.png";
 
-    public static final Color[] casedesbateuaucolors=  {Color.decode("#003366"),Color.decode("#FFFDE7"),Color.decode("#FFF59D"),Color.decode("#FDD835"),Color.decode("#F57F17"),Color.decode("#FFF59D")};
+    public static final Color[] casedesbateuaucolors=  {Color.decode("#1C1C1C"),Color.decode("#003366"),Color.decode("#FFFDE7"),Color.decode("#FFF59D"),Color.decode("#FDD835"),Color.decode("#F57F17"),Color.decode("#FFF59D")};
     public static final Color[] casedestirecolor={Color.decode("#003366"),Color.decode("#00E676"),Color.decode("#212121")};
     public static final Color SelectColor=Color.decode("#1DE9B6");
     public static final Color ChoixColor= Color.decode("#1565C0");

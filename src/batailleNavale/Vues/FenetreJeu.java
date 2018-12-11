@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Observable;
@@ -26,7 +27,7 @@ import javax.swing.text.View;
  *
  * @author walidone
  */
-public class FenetreJeu extends JFrame implements Observer{
+public class FenetreJeu extends JFrame implements Observer {
 
     private Jeu modele;
     private Controleur controleur;
@@ -497,6 +498,7 @@ public class FenetreJeu extends JFrame implements Observer{
         nomsauvgarder = new javax.swing.JTextField();
         JScrollPane jScrollPane2 = new javax.swing.JScrollPane();
         JTextPane savenom = new javax.swing.JTextPane();
+        if(modele.getNompartie()!=null)nomsauvgarder.setText(modele.getNompartie());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -703,7 +705,8 @@ public class FenetreJeu extends JFrame implements Observer{
     }
     private void chargerMenuClick(MouseEvent evt) {
         String lien=selectioner_un_ficher(1);
-        controleur.chargerpartie(lien);
+        controleur.chargerpartie(lien,this);
+        this.etat=modele.getetat();
     }
 
 
@@ -797,5 +800,15 @@ public class FenetreJeu extends JFrame implements Observer{
         return lien;
     }
 
+    public void close(){
+        setVisible(false);
+        dispose();
+    }
+    public void getetat(Ressources.Etats etat){
+        this.etat=etat;
+    }
+    public Ressources.Etats getetat(){
+        return this.etat;
+    }
 
 }
