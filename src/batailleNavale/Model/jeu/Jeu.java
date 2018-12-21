@@ -4,7 +4,9 @@ package batailleNavale.Model.jeu;
 import batailleNavale.Controleur.Controleur;
 import batailleNavale.DaoSauvegarde.UsineSaveLoad;
 import batailleNavale.Model.Epoques.Epoque;
+import batailleNavale.Model.Joueur.AbstractJoueur;
 import batailleNavale.Model.Joueur.Joueur;
+import batailleNavale.Model.Joueur.Machine;
 import batailleNavale.Model.Joueur.Plateau;
 import batailleNavale.Ressources;
 import batailleNavale.Vues.FenetreJeu;
@@ -22,8 +24,15 @@ public class Jeu extends Observable implements Serializable {
     String nompartie;
     Epoque epoque;
     Ressources.Etats etat=Ressources.Etats.Menu;
-    Joueur joueur;
+    AbstractJoueur[] joueurs;
     Plateau p;
+
+    public Jeu(){
+        joueurs = new AbstractJoueur[2];
+        joueurs[0] = new Joueur();
+        joueurs[1] = new Machine();
+
+    }
 
     public void nouvellepartie(String nom, String epoque){
         System.out.println("new partie"+nom+" epoque "+epoque);
@@ -38,13 +47,13 @@ public class Jeu extends Observable implements Serializable {
 
     public int[][]getBateauMatrice(){
 
-        int mat [][] = new int[Ressources.Hauteur][Ressources.Largeur];
-        mat=joueur.getMatriceBateau();
+        int mat [][];
+        mat=((Joueur) joueurs[0]).getMatriceBateau();
         return mat;
     }
     public int[][]getTireMatrice(){
-        int mat [][] = new int[Ressources.Hauteur][Ressources.Largeur];
-        mat=joueur.getMatriceBateau();
+        int mat [][];
+        mat=((Joueur) joueurs[0]).getMatriceBateau();
         return mat;
 
     }
@@ -59,7 +68,7 @@ public class Jeu extends Observable implements Serializable {
         Point p1 = new Point(pos[0][0],pos[0][1]);
         Point p2 = new Point(pos[1][0],pos[1][1]);
         int typeBateua = Integer.valueOf(type_bat);
-        joueur.monterBateau(p1,p2,typeBateua);
+        ((Joueur) joueurs[0]).monterBateau(p1,p2,typeBateua);
         setChanged();
         notifyObservers();
         System.out.println("bateu selectionner monte");
@@ -77,7 +86,7 @@ public class Jeu extends Observable implements Serializable {
     public void tirer_cas(int x, int y){
         System.out.println("tire "+x+","+y);
 
-        if(joueur.attaquer(x,y)!=null) {
+        if(((Joueur) joueurs[0]).attaquer(x,y)!=null) {
             setChanged();
             notifyObservers();
             etat= Ressources.Etats.Selection;
