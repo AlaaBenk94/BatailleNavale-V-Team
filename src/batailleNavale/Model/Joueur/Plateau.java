@@ -26,7 +26,10 @@ public class Plateau implements Serializable {
 
     private boolean tirePossible; // pour savoir si on peu choisir une case pour tirer ou non
 
-
+    /**
+     * Constructeur
+     * @param epoque
+     */
     public Plateau(String epoque){
         this.epoque =epoque;
         plateau = new Bateau[Ressources.Hauteur][Ressources.Largeur];
@@ -82,7 +85,6 @@ public class Plateau implements Serializable {
     /**
      * méthode qui vérifie si un bateau est détruit
      **/
-
     boolean estOccupe(Point p1, Point p2,int type){
         int i,j,mini=p1.x,minj=p1.y;
         if(p1.x>p2.x) mini=p2.x;
@@ -96,21 +98,20 @@ public class Plateau implements Serializable {
                         if(plateau[i][minj]!=null) return true;
         return false;
     }
-    /*
+
+    /**
      ** verifier si la case du bateau est toujours pas noyer
      ** ce qui revien a verifier qu'on peut la choisir pour effectuer un tire
      */
-
     public boolean estNoyer(int x, int y){
         if((plateau [x][y]==null && plateau2[x][y]==false) || (plateau [x][y]!=null && plateau [x][y].get_res_Cas(x,y)<=0) ) return  true;
         return false;
     }
 
-    /*
+    /**
     ** fonction qui verifie l'etat de la case sur le plateau (case bateau ou case mer)
     ** etat=-1 lorsque la case et une case mer brulee ou noyee et etat=0 si la case mer est true
      */
-
     public int getResisteceCase(int x, int y){
         Bateau bateau =plateau[x][y];
         if(bateau==null){
@@ -120,10 +121,10 @@ public class Plateau implements Serializable {
            return Ressources.casedesbateuau[bateau.getResistance()];
         }
     }
-    /*
+
+    /**
      ** recuperer les information de bateau
      */
-
     private String sep="<br>";
     public String getinfobateucase(int x,int y){
         Bateau bateau =plateau[x][y];
@@ -136,7 +137,12 @@ public class Plateau implements Serializable {
         else return "vide";
     }
 
-
+    /**
+     * Recuperer l'etat de la case (x,y)
+     * @param x
+     * @param y
+     * @return
+     */
     public int getEtatCase(int x, int y){
         Bateau bateau =plateau[x][y];
         if(bateau==null){
@@ -153,10 +159,9 @@ public class Plateau implements Serializable {
         }
     }
 
-    /*
+    /**
     ** matrice d'etat des cases du plateau du joueur
      */
-
     public int[][]getBateauMatrice() {
         int[][] mat = new int[Ressources.Largeur][Ressources.Hauteur];
         for (int i = 0; i < Ressources.Hauteur; i++) {
@@ -166,10 +171,10 @@ public class Plateau implements Serializable {
         }
             return mat;
     }
-    /*
+
+    /**
     ** matrice d'etat des cases du joueur adversaire
      */
-
     public int[][]getTireMatrice(){
         int[][] mat = new int[Ressources.Hauteur][Ressources.Largeur];
         for(int i=0;i<Ressources.Hauteur;i++){
@@ -253,6 +258,9 @@ public class Plateau implements Serializable {
         return null;
     }
 
+    /**
+     * affichage de platreau
+     */
     void  affichePlateu(){
         for(int i =0 ;i<plateau.length;i++) {
             System.out.println();
