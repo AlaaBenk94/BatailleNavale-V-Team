@@ -25,7 +25,7 @@ public class Joueur extends AbstractJoueur implements Serializable {
         return  myField.getBateauMatrice();
     }
 
-    public int [][]getMatriceOrdi(){
+    public int [][] getMatriceOrdi(){
         return ((Machine) next).getMatriceOrdi();
     }
 
