@@ -282,6 +282,10 @@ public class Plateau implements Serializable {
         }
     }
 
+    Bateau getBateu(int x, int y){
+        return plateau[x][y];
+    }
+
 
 
    public  static  void main(String [] args){

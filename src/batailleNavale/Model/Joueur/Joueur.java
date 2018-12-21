@@ -42,6 +42,12 @@ public class Joueur extends AbstractJoueur implements Serializable {
            tire.setPositionCible(new int[]{ciblex,cibley});
            Ressources.TireEtats etatdetire = ((Machine) next).getMyField().prendTire(tire);
                if(etatdetire== Ressources.TireEtats.Timposible)return false;
+               else {
+                   Bateau b=myField.getBateu(xbateu,ybateu);
+                   b.setProjectiles(b.getProjectiles()-1);
+                 /// gerer les toure
+
+               }
            return true;
     }
 
