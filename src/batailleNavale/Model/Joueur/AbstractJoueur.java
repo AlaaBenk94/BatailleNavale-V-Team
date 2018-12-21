@@ -135,11 +135,6 @@ public abstract class AbstractJoueur {
 		this.myTurn = myTurn;
 	}
 
-    /**
-     * methode qui permet d'attaquer (tirer sur une position).
-     * @param x
-     * @param y
-     * @return
-     */
-    public abstract Tire attaquer(int x, int y);
+
+    public abstract boolean attaquer(int xbateu, int ybateu, int ciblex, int cibley);
 }

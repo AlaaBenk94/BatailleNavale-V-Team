@@ -20,6 +20,7 @@ public abstract class Bateau {
       this.force=force;
       this.resistance=resistance;
       this.cas=new int[type];
+      this.projectiles=type*Ressources.NBPROJECTILEPARCASE;
       for (int i=0;i<cas.length;i++)cas[i]=resistance;
 	}
 	public int[][] getPosition() {
@@ -95,7 +96,6 @@ public abstract class Bateau {
 	}
 // retoutner la resistance d'une case se trouvant dans le tableau cas des cases
 	public int get_res_Cas(int x,int y) {
-        int[] batcase = this.getCas();
         int[][] pos = this.getPosition();
         int ind = 0;
         if (pos[0][1] == pos[1][1]) {

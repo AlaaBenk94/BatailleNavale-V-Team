@@ -25,7 +25,7 @@ public class Jeu extends Observable implements Serializable {
     Epoque epoque;
     Ressources.Etats etat=Ressources.Etats.Menu;
     AbstractJoueur[] joueurs;
-
+    private int[]pos_Tireur;
     /**
      * constructeur du jeu.
      */
@@ -64,7 +64,7 @@ public class Jeu extends Observable implements Serializable {
      * @return
      */
     public int[][]getTireMatrice(){
-        return ((Joueur) joueurs[0]).getMatriceBateau();
+        return ((Joueur) joueurs[0]).getMatriceOrdi();
     }
 
     /**
@@ -84,9 +84,9 @@ public class Jeu extends Observable implements Serializable {
      */
     public void ajouter_le_Bateu_select(int[][] pos,String type_bat){
         etat= Ressources.Etats.Selection;
-        Point p1 = new Point(pos[0][0],pos[0][1]);
-        Point p2 = new Point(pos[1][0],pos[1][1]);
-        int typeBateua = Integer.valueOf(type_bat);
+        Point p1 = new Point(pos[0][1],pos[0][0]);
+        Point p2 = new Point(pos[1][1],pos[1][0]);
+        int typeBateua = epoque.getBateauTaille(type_bat);
         ((Joueur) joueurs[0]).monterBateau(p1,p2,typeBateua);
         setChanged();
         notifyObservers();
@@ -100,13 +100,13 @@ public class Jeu extends Observable implements Serializable {
      */
     public void selecinner_cas_bateu_qui_tire(int x, int y){
         System.out.println("select "+x+","+y);
-        etat=Ressources.Etats.Tire;
-        if(!((Joueur) joueurs[0]).getMyField().estNoyer(x,y)) {
+        joueurs[0].getMyField().tirer(x,y);
+        if(((Joueur) joueurs[0]).getMyField().peutTirer(x,y)){
+            etat=Ressources.Etats.Tire;
+            pos_Tireur=new int[]{x,y};
             setChanged();
             notifyObservers();
-            System.out.println("selection reussite !");
         }
-        System.out.println("erreur de selection  : case noyee");
     }
 
     /**
@@ -117,14 +117,13 @@ public class Jeu extends Observable implements Serializable {
     public void tirer_cas(int x, int y){
         System.out.println("tire "+x+","+y);
 
-        if( ((Joueur) joueurs[0]).attaquer(x,y) != null) {
+        if(((Joueur) joueurs[0]).attaquer(pos_Tireur[0],pos_Tireur[1],x,y)) {
+            etat= Ressources.Etats.Selection;
             setChanged();
             notifyObservers();
-            etat= Ressources.Etats.Selection;
             System.out.println("attaque reussie");
         }
         else {
-            etat = Ressources.Etats.Tire;
             System.out.println("attaque pas reussie");
             System.out.println("rester dans l'etat"+etat);
         }

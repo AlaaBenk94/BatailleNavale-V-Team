@@ -127,16 +127,16 @@ public class Plateau implements Serializable {
      */
     private String sep="<br>";
     public String getinfobateucase(int x,int y){
-
         Bateau bateau =plateau[x][y];
+        if(bateau==null)return "vide";
         String batNom = bateau.getNom();
         String nbProjectile = String.valueOf(bateau.getProjectiles());
         String resistance = String.valueOf(bateau.get_res_Cas(x,y));
 
         if(!estNoyer(x,y) && bateau!=null)
-            return "<html> batNom  : "+ batNom + sep
-                    + " nbProjectile : " + nbProjectile + sep
-                    + "resistance : " + resistance + "</html>";
+            return "<html> batNom  : "+ batNom + sep + sep
+                    + " nbProjectile : " + nbProjectile + sep +sep
+                    + "resistance : " +resistance + "</html>";
         else return "vide";
     }
 
@@ -169,7 +169,7 @@ public class Plateau implements Serializable {
         int[][] mat = new int[Ressources.Largeur][Ressources.Hauteur];
         for (int i = 0; i < Ressources.Hauteur; i++) {
             for (int j = 0; j < Ressources.Largeur; j++) {
-                mat[i][j] = getResisteceCase(i, j);
+                mat[i][j] = getResisteceCase(j,i);
             }
         }
             return mat;
@@ -182,7 +182,7 @@ public class Plateau implements Serializable {
         int[][] mat = new int[Ressources.Hauteur][Ressources.Largeur];
         for(int i=0;i<Ressources.Hauteur;i++){
             for(int j=0;j<Ressources.Largeur;j++){
-                mat[i][j]=getEtatCase(i,j);
+                mat[i][j]=getEtatCase(j,i);
             }
         }
         return mat;
@@ -194,19 +194,19 @@ public class Plateau implements Serializable {
      * dans l'attribut tire on trouvera combien la case de coordonnees x et y lui reste pour prendre des tires
      * dans le cas ou la case une case mere, pour la difirencier de la cae bateau ou la mets a false pour interdir de tirer une autre fois sur cette case
      **/
-    public int  prendTire(Tire tire){
+    public Ressources.TireEtats prendTire(Tire tire){
         int x = tire.getPositionCible()[0];
         int y = tire.getPositionCible()[1];
         if(!estNoyer(x, y)) {
             if(plateau[x][y]==null){
                 plateau2[x][y] = false;
-                return 1;
+                return Ressources.TireEtats.TVide;
             }else {
                 plateau[x][y].preandFeu(tire);
-                return 1;
+                return Ressources.TireEtats.TBateau;
             }
         }
-        return -1;
+        return Ressources.TireEtats.Timposible;
     }
 
     /**
@@ -221,8 +221,12 @@ public class Plateau implements Serializable {
         return null;
     }
 
-
-
+    public boolean peutTirer(int x, int y) {
+        if (!estNoyer(x, y) && plateau[x][y] != null) {
+            return plateau[x][y].peutTirer();
+        }
+        return false;
+    }
     /**
      * méthode qui permet de placer les bateau sur le plateau et de les créer aussi
      **/
@@ -230,7 +234,6 @@ public class Plateau implements Serializable {
 
     public Bateau poserBateau(Point p1 , Point p2, int type) {
         //ccondition a verifier pour pouvoir poser un bateau
-
         int i,j,mini,minj;
 
         mini=p1.x;
@@ -243,6 +246,7 @@ public class Plateau implements Serializable {
         if(!estDeborde(p1,p2) && !estHV(p1,p2)){
             if (!estOccupe(p1,p2,type)) {
                 Bateau b = Epoque.getEpoque(this.epoque).getBateau(type);
+                b.setPosition(new int[][]{{p1.x,p1.y},{p2.x,p2.y}});
                 if(p1.x==p2.x)
                     for(j=minj; j<minj+type;j++) {
                         plateau[mini][j] = b;

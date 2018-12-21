@@ -27,9 +27,10 @@ public class Machine extends AbstractJoueur {
     }
 
     @Override
-    public Tire attaquer(int x, int y){
-        return myField.tirer(x,y);
+    public boolean attaquer(int xbateu, int ybateu, int ciblex, int cibley) {
+        return false;
     }
+
 
     int [][]getMatriceOrdi(){
         return myField.getTireMatrice();
