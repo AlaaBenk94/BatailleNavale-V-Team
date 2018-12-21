@@ -27,6 +27,9 @@ public class Jeu extends Observable implements Serializable {
     AbstractJoueur[] joueurs;
     Plateau p;
 
+    /**
+     * constructeur du jeu.
+     */
     public Jeu(){
         joueurs = new AbstractJoueur[2];
         joueurs[0] = new Joueur();
@@ -34,6 +37,11 @@ public class Jeu extends Observable implements Serializable {
 
     }
 
+    /**
+     * methode qui créé une nouvelle partie
+     * @param nom
+     * @param epoque
+     */
     public void nouvellepartie(String nom, String epoque){
         System.out.println("new partie"+nom+" epoque "+epoque);
         nompartie=nom;
@@ -44,13 +52,21 @@ public class Jeu extends Observable implements Serializable {
     }
 
 
-
+    /**
+     * recuperer la matrice des bateaux
+     * @return
+     */
     public int[][]getBateauMatrice(){
 
         int mat [][];
         mat=((Joueur) joueurs[0]).getMatriceBateau();
         return mat;
     }
+
+    /**
+     * recuperer la matrice des tires
+     * @return
+     */
     public int[][]getTireMatrice(){
         int mat [][];
         mat=((Joueur) joueurs[0]).getMatriceBateau();
@@ -58,11 +74,21 @@ public class Jeu extends Observable implements Serializable {
 
     }
 
+    /**
+     * recuperer les infos de la case (x,y)
+     * @param x
+     * @param y
+     * @return
+     */
     public String getinfobateucase(int x,int y){
-
          return p.getinfobateucase(x,y) ;
     }
 
+    /**
+     * placer le bateau choisi sur le plateau a la position choisie.
+     * @param pos
+     * @param type_bat
+     */
     public void ajouter_le_Bateu_select(int[][] pos,String type_bat){
         etat= Ressources.Etats.Selection;
         Point p1 = new Point(pos[0][0],pos[0][1]);
@@ -73,6 +99,12 @@ public class Jeu extends Observable implements Serializable {
         notifyObservers();
         System.out.println("bateu selectionner monte");
     }
+
+    /**
+     * selection de bateau qui effectue le tire
+     * @param x
+     * @param y
+     */
     public void selecinner_cas_bateu_qui_tire(int x, int y){
         System.out.println("select "+x+","+y);
         etat=Ressources.Etats.Tire;
@@ -83,10 +115,16 @@ public class Jeu extends Observable implements Serializable {
         }
         System.out.println("erreur de selection  : case noyee");
     }
+
+    /**
+     * methode de tire
+     * @param x coordonnée
+     * @param y coordonnée
+     */
     public void tirer_cas(int x, int y){
         System.out.println("tire "+x+","+y);
 
-        if(((Joueur) joueurs[0]).attaquer(x,y)!=null) {
+        if( ((Joueur) joueurs[0]).attaquer(x,y) != null) {
             setChanged();
             notifyObservers();
             etat= Ressources.Etats.Selection;
@@ -100,32 +138,61 @@ public class Jeu extends Observable implements Serializable {
 
     }
 
-    ///////////////////////////////////////////////////////////
-
+    /**
+     * Getter Epoque
+     * @return
+     */
     public Epoque getEpoque() {
         return epoque;
     }
 
+    /**
+     * Getter description des bateaux disponibles
+     * @return
+     */
     public Map<String, String> getBateuDescreption() {
         return epoque.getBateuDescreption();
     }
 
-
+    /**
+     * Getter Nom de la partie
+     * @return
+     */
     public String getNompartie() {
         return nompartie;
     }
+
+    /**
+     * Getter Etat de jeu
+     * @return
+     */
     public Ressources.Etats getetat(){
         return etat;
     }
+
+    /**
+     * recuperer la liste des epoques
+     * @return
+     */
     public String[] getEpoqes(){
         return Ressources.epoques;
     }
+
+    /**
+     * La liste des bateaux disponible
+     * @return
+     */
     public String[] getBateuTypes(){ return epoque.getBateauType(); }
     public void notify_views(){
         setChanged();
         notifyObservers();
     }
 
+    /**
+     * methode de chargement de la partie
+     * @param lien chemin de fichier de sauvegarde
+     * @param fenetre la fenetre graphique
+     */
     public void chargerpartie(String lien,FenetreJeu fenetre){
         Jeu partiecharger=UsineSaveLoad.getUsineSaveLoad("ser").charger(lien);
         Ressources.Etats etatp = partiecharger.getetat();
@@ -139,12 +206,21 @@ public class Jeu extends Observable implements Serializable {
         }
 
     }
+
+    /**
+     * methode de sauvegarde de partie.
+     * @param lien repertoire de sauvegarde
+     */
     public void sauvgarder(String lien){
         Ressources.Etats etatr=etat;
         UsineSaveLoad.getUsineSaveLoad("ser").sauvegarder(this,lien);
         etat=etatr;
     }
 
+    /**
+     * Setter d'etat de jeu.
+     * @param etat
+     */
     public void setetat(Ressources.Etats etat){
         this.etat=etat;
         setChanged();
