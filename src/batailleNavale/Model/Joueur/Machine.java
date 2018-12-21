@@ -10,8 +10,8 @@ public class Machine extends AbstractJoueur {
     /**
      * TO DO
      */
-    public Machine() {
-
+    public Machine(String epoque) {
+        super("Machine", epoque);
     }
 
     /**

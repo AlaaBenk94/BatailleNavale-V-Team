@@ -12,8 +12,8 @@ import java.io.Serializable;
  */
 public class Joueur extends AbstractJoueur implements Serializable {
 
-    public Joueur() {
-
+    public Joueur(String nom, String ep) {
+        super(nom, ep);
     }
 
     @Override
@@ -30,7 +30,10 @@ public class Joueur extends AbstractJoueur implements Serializable {
     }
 
     public Bateau monterBateau(Point p1, Point p2, int type){
-            return myField.poserBateau(p1,p2, type);
+            Bateau b = myField.poserBateau(p1,p2, type);
+            if(b != null)
+                myBoats.add(b);
+            return b;
     }
 
     @Override
