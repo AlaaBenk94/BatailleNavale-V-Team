@@ -7,6 +7,20 @@ import batailleNavale.Model.Bateaux.Tire;
  */
 public class Machine extends AbstractJoueur {
 
+    /**
+     * TO DO
+     */
+    public Machine() {
+
+    }
+
+    /**
+     * TO DO
+     */
+    public void initializeBoatPosition() {
+
+    }
+
     @Override
     public void jouer() {
 
