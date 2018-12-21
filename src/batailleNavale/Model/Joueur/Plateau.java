@@ -115,7 +115,7 @@ public class Plateau implements Serializable {
     public int getResisteceCase(int x, int y){
         Bateau bateau =plateau[x][y];
         if(bateau==null){
-            if(plateau2[x][y])return Ressources.casedesbateuau[1];
+            if(!plateau2[x][y])return Ressources.casedesbateuau[1];
             else return Ressources.casedesbateuau[0];
         }else{
            return Ressources.casedesbateuau[bateau.getResistance()];

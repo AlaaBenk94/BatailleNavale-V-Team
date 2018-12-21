@@ -65,9 +65,7 @@ public class Jeu extends Observable implements Serializable {
      * @return
      */
     public int[][]getTireMatrice(){
-        int mat [][];
-        mat=((Joueur) joueurs[0]).getMatriceBateau();
-        return mat;
+        return ((Joueur) joueurs[0]).getMatriceBateau();
 
     }
 
