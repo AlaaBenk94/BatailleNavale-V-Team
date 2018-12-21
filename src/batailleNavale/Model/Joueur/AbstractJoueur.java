@@ -1,6 +1,8 @@
 package batailleNavale.Model.Joueur;
 
 import batailleNavale.Model.Bateaux.Bateau;
+import batailleNavale.Model.Bateaux.Tire;
+
 import java.util.ArrayList;
 
 import static batailleNavale.Ressources.epoques;
@@ -132,4 +134,12 @@ public abstract class AbstractJoueur {
 	public void setMyTurn(boolean myTurn) {
 		this.myTurn = myTurn;
 	}
+
+    /**
+     * methode qui permet d'attaquer (tirer sur une position).
+     * @param x
+     * @param y
+     * @return
+     */
+    public abstract Tire attaquer(int x, int y);
 }

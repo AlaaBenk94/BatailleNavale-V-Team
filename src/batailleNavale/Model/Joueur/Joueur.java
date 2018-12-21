@@ -7,31 +7,35 @@ import batailleNavale.Ressources;
 import java.awt.*;
 import java.io.Serializable;
 
+/**
+ * Cette class represente le joueur humain.
+ */
 public class Joueur extends AbstractJoueur implements Serializable {
-    Plateau p;
-    Machine m;
+
+    public Joueur() {
+
+    }
+
     @Override
     public void jouer() {
 
     }
 
     public int [][] getMatriceBateau(){
-        int matBateu [][] = new int[Ressources.Hauteur][Ressources.Largeur];
-        return  matBateu=p.getBateauMatrice();
+        return  myField.getBateauMatrice();
     }
 
     public int [][]getMatriceOrdi(){
-        int matOrdi [][] = new int[Ressources.Hauteur][Ressources.Largeur];
-        return matOrdi=m.getMatriceOrdi();
+        return ((Machine) next).getMatriceOrdi();
     }
 
-public Bateau monterBateau(Point p1, Point p2, int type){
-        return p.poserBateau(p1,p2, type);
-}
+    public Bateau monterBateau(Point p1, Point p2, int type){
+            return myField.poserBateau(p1,p2, type);
+    }
+
+    @Override
     public Tire attaquer(int x, int y){
-
-            return p.tirer(x,y);
-
+            return myField.tirer(x,y);
     }
 
 }

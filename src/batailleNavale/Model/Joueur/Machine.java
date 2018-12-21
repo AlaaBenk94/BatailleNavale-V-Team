@@ -1,17 +1,23 @@
 package batailleNavale.Model.Joueur;
 
-import batailleNavale.Ressources;
+import batailleNavale.Model.Bateaux.Tire;
 
+/**
+ * Cette classe represente la machine (adversaire).
+ */
 public class Machine extends AbstractJoueur {
-    Plateau p;
+
     @Override
     public void jouer() {
 
+    }
 
+    @Override
+    public Tire attaquer(int x, int y){
+        return myField.tirer(x,y);
     }
 
     int [][]getMatriceOrdi(){
-        int matOrdi [][] = new int[Ressources.Hauteur][Ressources.Largeur];
-        return matOrdi=p.getTireMatrice();
+        return myField.getTireMatrice();
     }
 }
