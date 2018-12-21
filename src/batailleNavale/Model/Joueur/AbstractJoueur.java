@@ -8,12 +8,12 @@ import java.util.ArrayList;
  */
 public abstract class AbstractJoueur {
 
-	private Plateau myField;
-	private Plateau enemyField;
-	private String name;
-	private AbstractJoueur next;
-	private ArrayList<Bateau> myBoats;
-	private boolean myTurn;
+	protected Plateau myField;
+	protected Plateau enemyField;
+	protected String name;
+	protected AbstractJoueur next;
+	protected ArrayList<Bateau> myBoats;
+	protected boolean myTurn;
 
 	/**
 	 * Constructeur par default.
