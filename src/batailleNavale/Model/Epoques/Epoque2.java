@@ -62,4 +62,9 @@ public class Epoque2 extends Epoque {
     public String getNom() {
         return NOMEPOQUE;
     }
+
+    @Override
+    public int[] getBateauxSize() {
+        return TYPES;
+    }
 }

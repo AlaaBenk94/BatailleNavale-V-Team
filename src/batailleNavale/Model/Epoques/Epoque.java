@@ -21,5 +21,6 @@ public abstract class Epoque implements Serializable {
 	public abstract String[] getBateauType();
 	public abstract int getBateauTaille(String nom);
 	public abstract String getNom();
+	public abstract int[] getBateauxSize();
 
 }
