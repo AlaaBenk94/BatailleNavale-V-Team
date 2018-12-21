@@ -37,8 +37,12 @@ public class Joueur extends AbstractJoueur implements Serializable {
     }
 
     @Override
-    public Tire attaquer(int x, int y){
-            return myField.tirer(x,y);
+    public boolean attaquer(int xbateu, int ybateu, int ciblex, int cibley){
+           Tire tire=myField.tirer(xbateu,ybateu);
+           tire.setPositionCible(new int[]{ciblex,cibley});
+           Ressources.TireEtats etatdetire = ((Machine) next).getMyField().prendTire(tire);
+               if(etatdetire== Ressources.TireEtats.Timposible)return false;
+           return true;
     }
 
 }

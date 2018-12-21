@@ -11,6 +11,8 @@ public class Ressources implements Serializable {
     public static final int PLATEAU_WIDTH = 10;
     public static final int PLATEAU_HEIGHT = 10;
 
+    public static final int NBPROJECTILEPARCASE=2;
+
     public static final int Largeur=10;
     public static final int Hauteur=10;
     public static final int CasTaille=30;
@@ -32,6 +34,7 @@ public class Ressources implements Serializable {
     public static final int[] casedesTire={0,1,2};
 
     public enum Etats{Menu,Placement,Selection,Tire,Fermer};
+    public enum TireEtats{TBateau,TVide,Timposible};
 
     public static final String[] epoques={"epoque1","epoque2"};
 
