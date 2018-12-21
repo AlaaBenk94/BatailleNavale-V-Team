@@ -31,8 +31,14 @@ public class Jeu extends Observable implements Serializable {
      */
     public Jeu(){
         joueurs = new AbstractJoueur[2];
-        joueurs[0] = new Joueur();
-        joueurs[1] = new Machine();
+    }
+
+    /**
+     * creation des joueurs
+     */
+    public void creerJoueurs(String nom, String ep){
+        joueurs[0] = new Joueur(nom, ep);
+        joueurs[1] = new Machine(ep);
         joueurs[0].setNext(joueurs[1]);
     }
 
@@ -46,6 +52,7 @@ public class Jeu extends Observable implements Serializable {
         nompartie=nom;
         this.epoque=Epoque.getEpoque(epoque);
         etat=Ressources.Etats.Placement;
+        creerJoueurs(nom, epoque);
         setChanged();
         notifyObservers();
     }
