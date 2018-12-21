@@ -3,13 +3,14 @@ package batailleNavale.Model.Joueur;
 import batailleNavale.Model.Bateaux.Bateau;
 import java.util.ArrayList;
 
+import static batailleNavale.Ressources.epoques;
+
 /**
- * Cette classe definie les attributs et le comportement en commin des joueurs de differents type : Homme et machine.
+ * Cette classe definie les attributs et le comportement en commun des joueurs de differents type : Homme et machine.
  */
 public abstract class AbstractJoueur {
 
 	protected Plateau myField;
-	protected Plateau enemyField;
 	protected String name;
 	protected AbstractJoueur next;
 	protected ArrayList<Bateau> myBoats;
@@ -22,17 +23,20 @@ public abstract class AbstractJoueur {
 		name = "Player";
 		myBoats = new ArrayList<>();
 		next = null;
-		//myField = Plateau.getInstance();      /////getInstence(epoque)
-		//enemyField = Plateau.getInstance();
+		/**
+		 * TO EDIT
+		 */
+		myField = Plateau.getInstance(epoques[0]);
 	}
 
 	/**
 	 * Surchage de constructeur. un seul parametre.
 	 * @param Name le Nom de joueur.
 	 */
-	public AbstractJoueur(String Name) {
+	public AbstractJoueur(String Name, String epoque) {
 		this();
 		this.name = Name;
+        myField = Plateau.getInstance(epoque);
 	}
 
 	/**
@@ -49,50 +53,82 @@ public abstract class AbstractJoueur {
 
 	// Setters & Getters
 
+	/**
+	 * Getter Next
+	 * @return
+	 */
 	public AbstractJoueur getNext() {
 		return next;
 	}
 
+	/**
+	 * Setter Next
+	 * @param next
+	 */
 	public void setNext(AbstractJoueur next) {
 		this.next = next;
 	}
 
+	/**
+	 * Getter Nom de joueur.
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Setter Nom de joueur
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Getter Bateaux
+	 * @return
+	 */
 	public ArrayList<Bateau> getMyBoats() {
 		return myBoats;
 	}
 
-	public void setMyBoats(ArrayList<Bateau> myBoats) {
-		this.myBoats = myBoats;
+	/**
+	 * Ajout Bateau dans la liste
+	 * @param myBoats
+	 */
+	public void addMyBoats(Bateau myBoats) {
+		this.myBoats.add(myBoats);
 	}
 
+	/**
+	 * Getter mon plateau
+	 * @return
+	 */
 	public Plateau getMyField() {
 		return myField;
 	}
 
+	/**
+	 * Setter mon plateau
+	 * @param myField
+	 */
 	public void setMyField(Plateau myField) {
 		this.myField = myField;
 	}
 
-	public Plateau getEnemyField() {
-		return enemyField;
-	}
-
-	public void setEnemyField(Plateau enemyField) {
-		this.enemyField = enemyField;
-	}
-
+	/**
+	 * Getter mon tour ?
+	 * @return
+	 */
 	public boolean isMyTurn() {
 		return myTurn;
 	}
 
+	/**
+	 * Setter c'est mon tour
+	 * @param myTurn
+	 */
 	public void setMyTurn(boolean myTurn) {
 		this.myTurn = myTurn;
 	}
