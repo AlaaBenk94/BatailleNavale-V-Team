@@ -127,13 +127,16 @@ public class Plateau implements Serializable {
      */
     private String sep="<br>";
     public String getinfobateucase(int x,int y){
+
         Bateau bateau =plateau[x][y];
         String batNom = bateau.getNom();
         String nbProjectile = String.valueOf(bateau.getProjectiles());
         String resistance = String.valueOf(bateau.get_res_Cas(x,y));
 
         if(!estNoyer(x,y) && bateau!=null)
-            return "<html> batNom  "+sep+" nbProjectile"+sep+"resistance </html>";
+            return "<html> batNom  : "+ batNom + sep
+                    + " nbProjectile : " + nbProjectile + sep
+                    + "resistance : " + resistance + "</html>";
         else return "vide";
     }
 

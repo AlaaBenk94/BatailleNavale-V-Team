@@ -25,7 +25,6 @@ public class Jeu extends Observable implements Serializable {
     Epoque epoque;
     Ressources.Etats etat=Ressources.Etats.Menu;
     AbstractJoueur[] joueurs;
-    Plateau p;
 
     /**
      * constructeur du jeu.
@@ -34,7 +33,7 @@ public class Jeu extends Observable implements Serializable {
         joueurs = new AbstractJoueur[2];
         joueurs[0] = new Joueur();
         joueurs[1] = new Machine();
-
+        joueurs[0].setNext(joueurs[1]);
     }
 
     /**
@@ -43,7 +42,7 @@ public class Jeu extends Observable implements Serializable {
      * @param epoque
      */
     public void nouvellepartie(String nom, String epoque){
-        System.out.println("new partie"+nom+" epoque "+epoque);
+        System.out.println("new partie" + nom + " epoque " + epoque);
         nompartie=nom;
         this.epoque=Epoque.getEpoque(epoque);
         etat=Ressources.Etats.Placement;
@@ -65,10 +64,7 @@ public class Jeu extends Observable implements Serializable {
      * @return
      */
     public int[][]getTireMatrice(){
-        int mat [][];
-        mat=((Joueur) joueurs[0]).getMatriceBateau();
-        return mat;
-
+        return ((Joueur) joueurs[0]).getMatriceBateau();
     }
 
     /**
@@ -78,7 +74,7 @@ public class Jeu extends Observable implements Serializable {
      * @return
      */
     public String getinfobateucase(int x,int y){
-         return p.getinfobateucase(x,y) ;
+        return ((Joueur) joueurs[0]).getMyField().getinfobateucase(x,y) ;
     }
 
     /**
@@ -105,7 +101,7 @@ public class Jeu extends Observable implements Serializable {
     public void selecinner_cas_bateu_qui_tire(int x, int y){
         System.out.println("select "+x+","+y);
         etat=Ressources.Etats.Tire;
-        if(!p.estNoyer(x,y)) {
+        if(!((Joueur) joueurs[0]).getMyField().estNoyer(x,y)) {
             setChanged();
             notifyObservers();
             System.out.println("selection reussite !");
