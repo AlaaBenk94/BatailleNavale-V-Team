@@ -1,7 +1,6 @@
 package batailleNavale.Model.Joueur;
 
 import batailleNavale.Model.Bateaux.Bateau;
-import batailleNavale.Model.Bateaux.Tire;
 import batailleNavale.Model.Epoques.Epoque;
 import batailleNavale.Ressources;
 
@@ -24,6 +23,7 @@ public class Machine extends AbstractJoueur {
     public Machine(String epoque) {
         super("Machine", epoque);
         initializeBoatPosition(epoque);
+        this.strategy = new Aleatoire();
     }
 
     /**
