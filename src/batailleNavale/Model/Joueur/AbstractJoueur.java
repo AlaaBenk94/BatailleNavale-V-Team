@@ -6,6 +6,7 @@ import batailleNavale.Model.Epoques.Epoque;
 
 import static batailleNavale.Ressources.TireEtats;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -146,6 +147,18 @@ public abstract class AbstractJoueur {
 		return total;
 	}
 
+
+	/**
+	 * cette methode permet de verifier si tous les bateaux sont détruits
+	 * @return
+	 */
+	public boolean allBoatsDestroyed(){
+		for(Bateau b : myBoats)
+			if(!myField.estDetruit(b))
+				return false;
+		return true;
+	}
+
 	/**
 	 * cette methode permet au joueur d'attaquer
 	 * @param xbateu
@@ -162,30 +175,15 @@ public abstract class AbstractJoueur {
 	 * @return
 	 */
 	public TireEtats prendreFeu(Tire tire){
-
-	    TireEtats e = myField.prendTire(tire);
-        if(e == TireEtats.TBateau)
-            updateBoatsList();
-        return e;
+	    return myField.prendTire(tire);
 	}
-
-    /**
-     * Cette methode permet d'acctualiser la liste des bateaux
-     * et suprimmer les bateaux detruits.
-     */
-	public void updateBoatsList(){
-        for(Bateau b : myBoats){
-            if(myField.estDetruit(b))
-                myBoats.remove(myBoats);
-        }
-    }
 
     /**
 	 * verifier si le joueur a perdu.
 	 * @return
 	 */
 	public boolean gameOver(){
-		return (nombreProjectilesTotale() == 0 || myBoats.isEmpty());
+		return (nombreProjectilesTotale() == 0 || allBoatsDestroyed());
 	}
 
 	/**
