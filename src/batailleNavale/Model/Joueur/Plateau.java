@@ -79,8 +79,9 @@ public class Plateau implements Serializable {
 
     boolean estDetruit(Bateau b){
         for(int i =0;i<b.getType();i++)
-            if(b.getCas()[i]==0) return true;
-        return  false;
+            if(b.getCas()[i] > 0)
+                return false;
+        return  true;
     }
 
     /**

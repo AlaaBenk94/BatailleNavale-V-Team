@@ -127,7 +127,9 @@ public class Jeu extends Observable implements Serializable {
 
         if(toutsPlacer())
             etat= Ressources.Etats.Selection;
-       notify_views();
+        setChanged();
+        notifyObservers();
+
     }
 
     /**
@@ -157,7 +159,7 @@ public class Jeu extends Observable implements Serializable {
             System.out.println(etat);
 
         }
-        if(((Joueur) joueurs[0]).GameOver()){
+        if(((Joueur) joueurs[0]).gameOver()){
             etat=Ressources.Etats.Gameover;
 
             System.out.println(etat);
@@ -233,7 +235,7 @@ public class Jeu extends Observable implements Serializable {
 
     public boolean estGameOW(){
 
-        if(((Joueur) joueurs[0]).GameOver()) {
+        if(((Joueur) joueurs[0]).gameOver()) {
             etat=Ressources.Etats.Gameover;
             return true;
         }
