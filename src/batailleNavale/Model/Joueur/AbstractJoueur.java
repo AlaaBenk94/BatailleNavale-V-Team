@@ -170,7 +170,7 @@ public abstract class AbstractJoueur {
 	 * @return
 	 */
 	public boolean GameOver(){
-		return false;
+		return (nombreProjectilesTotale() == 0 || myBoats.isEmpty());
 	}
 
 	/**
@@ -178,7 +178,7 @@ public abstract class AbstractJoueur {
 	 * @return
 	 */
 	public boolean gameWon(){
-		return false;
+		return next.GameOver();
 	}
 
 	/**
