@@ -184,7 +184,7 @@ public abstract class AbstractJoueur {
 	 * verifier si le joueur a perdu.
 	 * @return
 	 */
-	public boolean GameOver(){
+	public boolean gameOver(){
 		return (nombreProjectilesTotale() == 0 || myBoats.isEmpty());
 	}
 
@@ -193,7 +193,7 @@ public abstract class AbstractJoueur {
 	 * @return
 	 */
 	public boolean gameWon(){
-		return next.GameOver();
+		return next.gameOver();
 	}
 
 	/**

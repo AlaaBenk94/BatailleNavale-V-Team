@@ -3,16 +3,13 @@ package batailleNavale.Model.jeu;
 
 import batailleNavale.Controleur.Controleur;
 import batailleNavale.DaoSauvegarde.UsineSaveLoad;
-import batailleNavale.Model.Bateaux.Tire;
 import batailleNavale.Model.Epoques.Epoque;
 import batailleNavale.Model.Joueur.AbstractJoueur;
 import batailleNavale.Model.Joueur.Joueur;
 import batailleNavale.Model.Joueur.Machine;
-import batailleNavale.Model.Joueur.Plateau;
 import batailleNavale.Ressources;
 import batailleNavale.Vues.FenetreJeu;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
@@ -157,9 +154,19 @@ public class Jeu extends Observable implements Serializable {
     public void tirer_cas(int x, int y){
         if(((Joueur) joueurs[0]).attaquer(pos_Tireur[0],pos_Tireur[1],x,y)) {
             etat= Ressources.Etats.Selection;
-            setChanged();
-            notifyObservers();
         }
+
+        if(joueurs[0].gameOver())
+            System.out.println("GAME OVER !!");
+        else if(joueurs[0].gameWon())
+            System.out.println("GAME WON !!");
+
+        System.out.println("**********************************************");
+        System.out.println("Machine Boats : ");
+        System.out.println("**********************************************");
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
