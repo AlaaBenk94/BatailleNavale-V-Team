@@ -5,7 +5,6 @@ import batailleNavale.Ressources;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static batailleNavale.Ressources.Hauteur;
@@ -15,10 +14,11 @@ import static batailleNavale.Ressources.TireEtats.TVide;
 public class Croise implements Tirer {
 
     Random rand;
-    ArrayList<Point> PointsList;
+    ArrayList<Point> pointsList;
 
     public Croise() {
         rand = new Random();
+        pointsList = new ArrayList<Point>();
     }
 
     @Override
@@ -36,10 +36,20 @@ public class Croise implements Tirer {
 
     }
 
+    private Point getNextCible(){
+        if(pointsList.isEmpty())
+            initializeCross();
+        return pointsList.get(0);
+    }
+
     private void initializeCross(){
 
     }
 
+    /**
+     * cette methode qui crée
+     * @return
+     */
     public static Croise getInstance(){
         return new Croise();
     }
