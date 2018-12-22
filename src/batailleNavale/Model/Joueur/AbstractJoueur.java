@@ -166,6 +166,7 @@ public abstract class AbstractJoueur {
 	    TireEtats e = myField.prendTire(tire);
         if(e == TireEtats.TBateau)
             updateBoatsList();
+        return e;
 	}
 
     /**
