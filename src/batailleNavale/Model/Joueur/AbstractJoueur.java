@@ -162,10 +162,24 @@ public abstract class AbstractJoueur {
 	 * @return
 	 */
 	public TireEtats prendreFeu(Tire tire){
-		return myField.prendTire(tire);
+
+	    TireEtats e = myField.prendTire(tire);
+        if(e == TireEtats.TBateau)
+            updateBoatsList();
 	}
 
-	/**
+    /**
+     * Cette methode permet d'acctualiser la liste des bateaux
+     * et suprimmer les bateaux detruits.
+     */
+	public void updateBoatsList(){
+        for(Bateau b : myBoats){
+            if(myField.estDetruit(b))
+                myBoats.remove(myBoats);
+        }
+    }
+
+    /**
 	 * verifier si le joueur a perdu.
 	 * @return
 	 */
