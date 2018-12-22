@@ -16,6 +16,9 @@ public class Croise implements Tirer {
     Random rand;
     ArrayList<Point> pointsList;
 
+    /**
+     * Constructeur
+     */
     public Croise() {
         rand = new Random();
         pointsList = new ArrayList<Point>();
@@ -23,11 +26,9 @@ public class Croise implements Tirer {
 
     @Override
     public boolean tirer(AbstractJoueur player, Bateau boat) {
-        int x,y;
         Ressources.TireEtats etat;
-        x = rand.nextInt(Hauteur - 3);
-        y = rand.nextInt(Largeur - 3);
-        etat = player.prendreFeu(boat.tirer(x, y));
+        Point cible = getNextCible();
+        etat = player.prendreFeu(boat.tirer(cible.x, cible.y));
 
         if(etat != TVide)
             return true;
@@ -36,14 +37,26 @@ public class Croise implements Tirer {
 
     }
 
+    /**
+     * cette methode permet de retourner la case suivante
+     * @return
+     */
     private Point getNextCible(){
         if(pointsList.isEmpty())
             initializeCross();
-        return pointsList.get(0);
+        return pointsList.remove(0);
     }
 
+    /**
+     * cette methode permet de creer le Cross
+     */
     private void initializeCross(){
-
+        Point s = new Point(rand.nextInt(Hauteur - 3), rand.nextInt(Largeur - 3));
+        pointsList.add(new Point(s));
+        s.translate(1, 1); pointsList.add(new Point(s));
+        s.translate(1, 1); pointsList.add(new Point(s));
+        s.translate(-2, 0); pointsList.add(new Point(s));
+        s.translate(2, -2); pointsList.add(new Point(s));
     }
 
     /**
