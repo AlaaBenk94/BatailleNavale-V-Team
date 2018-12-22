@@ -2,12 +2,11 @@ package batailleNavale.Model.Joueur;
 
 import batailleNavale.Model.Bateaux.Bateau;
 import batailleNavale.Model.Bateaux.Tire;
+import batailleNavale.Model.Epoques.Epoque;
 
 import static batailleNavale.Ressources.TireEtats;
 
 import java.util.ArrayList;
-
-import static batailleNavale.Ressources.epoques;
 
 /**
  * Cette classe definie les attributs et le comportement en commun des joueurs de differents type : Homme et machine.
@@ -19,6 +18,7 @@ public abstract class AbstractJoueur {
 	protected AbstractJoueur next;
 	protected ArrayList<Bateau> myBoats;
 	protected boolean myTurn;
+	protected int remainingBoeatToPlace;
 
 	/**
 	 * Constructeur par default.
@@ -27,10 +27,6 @@ public abstract class AbstractJoueur {
 		name = "Player";
 		myBoats = new ArrayList<>();
 		next = null;
-		/**
-		 * TO EDIT
-		 */
-		myField = Plateau.getInstance(epoques[0]);
 	}
 
 	/**
@@ -41,6 +37,7 @@ public abstract class AbstractJoueur {
 		this();
 		this.name = Name;
         myField = Plateau.getInstance(epoque);
+        remainingBoeatToPlace = Epoque.getEpoque(epoque).getBateauxSize().length;
 	}
 
 	/**
@@ -167,4 +164,29 @@ public abstract class AbstractJoueur {
 	public TireEtats prendreFeu(Tire tire){
 		return myField.prendTire(tire);
 	}
+
+	/**
+	 * verifier si le joueur a perdu.
+	 * @return
+	 */
+	public boolean GameOver(){
+		return false;
+	}
+
+	/**
+	 * verifier si le joueur a gagné.
+	 * @return
+	 */
+	public boolean gameWon(){
+		return false;
+	}
+
+	/**
+	 * verifier s'il reste tjrs des Bateaux a placer.
+	 * @return
+	 */
+	public boolean enPlacement(){
+		return this.remainingBoeatToPlace == 0;
+	}
+
 }
