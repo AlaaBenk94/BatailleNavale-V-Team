@@ -221,6 +221,16 @@ public class Plateau implements Serializable {
         return null;
     }
 
+    /**
+     * Surcharge de la fonction fonction qui permet d'effectuer un tire sur un bateau
+     **/
+    public Tire tirer(int x, int y, int cibleX, int cibleY){
+        if(!estNoyer(x,y)&&plateau[x][y]!=null){
+            return plateau[x][y].tirer(cibleX,cibleY);
+        }
+        return null;
+    }
+
     public boolean peutTirer(int x, int y) {
         if (!estNoyer(x, y) && plateau[x][y] != null) {
             return plateau[x][y].peutTirer();
