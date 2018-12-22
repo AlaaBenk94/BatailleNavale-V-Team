@@ -40,6 +40,7 @@ public class Jeu extends Observable implements Serializable {
         joueurs[0] = new Joueur(nom, ep);
         joueurs[1] = new Machine(ep);
         joueurs[0].setNext(joueurs[1]);
+        joueurs[1].setNext(joueurs[0]);
     }
 
     /**
