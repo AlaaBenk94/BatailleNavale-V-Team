@@ -6,6 +6,7 @@ import batailleNavale.Model.Bateaux.Bateau;
 import static batailleNavale.Ressources.Hauteur;
 import static batailleNavale.Ressources.Largeur;
 import static batailleNavale.Ressources.TireEtats;
+import static batailleNavale.Ressources.TireEtats.TVide;
 import static batailleNavale.Ressources.TireEtats.Timposible;
 
 public class Aleatoire implements Tirer {
@@ -24,7 +25,7 @@ public class Aleatoire implements Tirer {
         y = rand.nextInt(Largeur - 1);
         etat = player.prendreFeu(boat.tirer(x, y));
 
-        if(etat != Timposible)
+        if(etat != TVide)
             return true;
 
         return false;
