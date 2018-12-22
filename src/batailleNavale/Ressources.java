@@ -8,9 +8,7 @@ import java.io.Serializable;
  */
 public class Ressources implements Serializable {
 
-    public static final int PLATEAU_WIDTH = 10;
-    public static final int PLATEAU_HEIGHT = 10;
-
+    public static final int NBBATEUDECHAQUETYPE=1;
     public static final int NBPROJECTILEPARCASE=2;
 
     public static final int Largeur=10;
@@ -33,7 +31,7 @@ public class Ressources implements Serializable {
     public static final int[] casedesbateuau={0,1,2,3,4,5,6};
     public static final int[] casedesTire={0,1,2};
 
-    public enum Etats{Menu,Placement,Selection,Tire,Fermer};
+    public enum Etats{Menu,Placement,Selection,Tire,Fermer,Gameover,Win};
     public enum TireEtats{TBateau,TVide,Timposible};
 
     public static final String[] epoques={"epoque1","epoque2"};
