@@ -23,7 +23,7 @@ public class Machine extends AbstractJoueur {
     public Machine(String epoque) {
         super("Machine", epoque);
         initializeBoatPosition(epoque);
-        this.strategy = Aleatoire.getInstance();
+        this.strategy = Croise.getInstance();
     }
 
     /**
@@ -76,7 +76,7 @@ public class Machine extends AbstractJoueur {
      */
     private Point[] getRandomPosition(int t){
         Random rand = new Random();
-        Point posX = new Point(rand.nextInt(Hauteur-t), rand.nextInt(Ressources.Largeur-t));
+        Point posX = new Point(rand.nextInt(Hauteur-t), rand.nextInt(Largeur-t));
         Point posY = new Point(posX);
         int k = t-1;
         if(rand.nextBoolean())
