@@ -16,6 +16,9 @@ public class Croise implements Tirer {
     Random rand;
     ArrayList<Point> pointsList;
 
+    /**
+     * Constructeur
+     */
     public Croise() {
         rand = new Random();
         pointsList = new ArrayList<Point>();
@@ -34,12 +37,19 @@ public class Croise implements Tirer {
 
     }
 
+    /**
+     * cette methode permet de retourner la case suivante
+     * @return
+     */
     private Point getNextCible(){
         if(pointsList.isEmpty())
             initializeCross();
         return pointsList.remove(0);
     }
 
+    /**
+     * cette methode permet de creer le Cross
+     */
     private void initializeCross(){
         Point s = new Point(rand.nextInt(Hauteur - 3), rand.nextInt(Largeur - 3));
         pointsList.add(new Point(s));
