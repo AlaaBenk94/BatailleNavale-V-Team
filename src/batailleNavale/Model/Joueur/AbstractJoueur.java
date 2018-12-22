@@ -2,10 +2,11 @@ package batailleNavale.Model.Joueur;
 
 import batailleNavale.Model.Bateaux.Bateau;
 import batailleNavale.Model.Bateaux.Tire;
+import batailleNavale.Model.Epoques.Epoque;
+
+import static batailleNavale.Ressources.TireEtats;
 
 import java.util.ArrayList;
-
-import static batailleNavale.Ressources.epoques;
 
 /**
  * Cette classe definie les attributs et le comportement en commun des joueurs de differents type : Homme et machine.
@@ -17,6 +18,7 @@ public abstract class AbstractJoueur {
 	protected AbstractJoueur next;
 	protected ArrayList<Bateau> myBoats;
 	protected boolean myTurn;
+	protected int remainingBoeatToPlace;
 
 	/**
 	 * Constructeur par default.
@@ -25,10 +27,6 @@ public abstract class AbstractJoueur {
 		name = "Player";
 		myBoats = new ArrayList<>();
 		next = null;
-		/**
-		 * TO EDIT
-		 */
-		myField = Plateau.getInstance(epoques[0]);
 	}
 
 	/**
@@ -39,6 +37,7 @@ public abstract class AbstractJoueur {
 		this();
 		this.name = Name;
         myField = Plateau.getInstance(epoque);
+        remainingBoeatToPlace = Epoque.getEpoque(epoque).getBateauxSize().length;
 	}
 
 	/**
@@ -135,6 +134,74 @@ public abstract class AbstractJoueur {
 		this.myTurn = myTurn;
 	}
 
+	/**
+	 * recuperer le nombre total des projectiles restants
+	 * sur tous les bateaux
+	 * @return
+	 */
+	public int nombreProjectilesTotale(){
+		int total = 0;
+		for (Bateau b : myBoats)
+			total += b.getProjectiles();
+		return total;
+	}
 
+	/**
+	 * cette methode permet au joueur d'attaquer
+	 * @param xbateu
+	 * @param ybateu
+	 * @param ciblex
+	 * @param cibley
+	 * @return
+	 */
     public abstract boolean attaquer(int xbateu, int ybateu, int ciblex, int cibley);
+
+	/**
+	 * cette methode gere les degats d'un tire d'enemie.
+	 * @param tire
+	 * @return
+	 */
+	public TireEtats prendreFeu(Tire tire){
+
+	    TireEtats e = myField.prendTire(tire);
+        if(e == TireEtats.TBateau)
+            updateBoatsList();
+        return e;
+	}
+
+    /**
+     * Cette methode permet d'acctualiser la liste des bateaux
+     * et suprimmer les bateaux detruits.
+     */
+	public void updateBoatsList(){
+        for(Bateau b : myBoats){
+            if(myField.estDetruit(b))
+                myBoats.remove(myBoats);
+        }
+    }
+
+    /**
+	 * verifier si le joueur a perdu.
+	 * @return
+	 */
+	public boolean GameOver(){
+		return (nombreProjectilesTotale() == 0 || myBoats.isEmpty());
+	}
+
+	/**
+	 * verifier si le joueur a gagné.
+	 * @return
+	 */
+	public boolean gameWon(){
+		return next.GameOver();
+	}
+
+	/**
+	 * verifier s'il reste tjrs des Bateaux a placer.
+	 * @return
+	 */
+	public boolean enPlacement(){
+		return this.remainingBoeatToPlace == 0;
+	}
+
 }

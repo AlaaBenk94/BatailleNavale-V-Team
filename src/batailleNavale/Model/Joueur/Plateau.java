@@ -78,7 +78,8 @@ public class Plateau implements Serializable {
      **/
 
     boolean estDetruit(Bateau b){
-        if(b.getResistance()==0) return  true;
+        for(int i =0;i<b.getType();i++)
+            if(b.getCas()[i]==0) return true;
         return  false;
     }
 
@@ -218,6 +219,16 @@ public class Plateau implements Serializable {
     public Tire tirer(int x, int y){
         if(!estNoyer(x,y)&&plateau[x][y]!=null){
          return plateau[x][y].tirer(x,y);
+        }
+        return null;
+    }
+
+    /**
+     * Surcharge de la fonction fonction qui permet d'effectuer un tire sur un bateau
+     **/
+    public Tire tirer(int x, int y, int cibleX, int cibleY){
+        if(!estNoyer(x,y)&&plateau[x][y]!=null){
+            return plateau[x][y].tirer(cibleX,cibleY);
         }
         return null;
     }

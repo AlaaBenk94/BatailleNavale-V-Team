@@ -33,7 +33,7 @@ public class Ressources implements Serializable {
     public static final int[] casedesbateuau={0,1,2,3,4,5,6};
     public static final int[] casedesTire={0,1,2};
 
-    public enum Etats{Menu,Placement,Selection,Tire,Fermer,Gameover,Win};
+    public enum Etats{Menu,Placement,Selection,Tire,Fermer,Gameover,Won};
     public enum TireEtats{TBateau,TVide,Timposible};
 
     public static final String[] epoques={"epoque1","epoque2"};

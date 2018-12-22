@@ -39,7 +39,7 @@ public class Jeu extends Observable implements Serializable {
         joueurs[0] = new Joueur(nom, ep);
         joueurs[1] = new Machine(ep);
         joueurs[0].setNext(joueurs[1]);
-        joueurs[1].getMyField().poserBateau(new Point(1,2),new Point(1,4),3);
+        joueurs[1].setNext(joueurs[0]);
     }
 
     /**
@@ -54,8 +54,7 @@ public class Jeu extends Observable implements Serializable {
         etat=Ressources.Etats.Placement;
         creerJoueurs(nom, epoque);
         initaliserBateuxPlacer();
-        setChanged();
-        notifyObservers();
+        notify_views();
     }
 
     private void initaliserBateuxPlacer(){
@@ -128,9 +127,7 @@ public class Jeu extends Observable implements Serializable {
 
         if(toutsPlacer())
             etat= Ressources.Etats.Selection;
-        setChanged();
-        notifyObservers();
-
+       notify_views();
     }
 
     /**
@@ -144,8 +141,7 @@ public class Jeu extends Observable implements Serializable {
         if(((Joueur) joueurs[0]).getMyField().peutTirer(x,y)){
             etat=Ressources.Etats.Tire;
             pos_Tireur=new int[]{x,y};
-            setChanged();
-            notifyObservers();
+            notify_views();
         }
     }
 
@@ -155,11 +151,24 @@ public class Jeu extends Observable implements Serializable {
      * @param y coordonnée
      */
     public void tirer_cas(int x, int y){
-        if(((Joueur) joueurs[0]).attaquer(pos_Tireur[0],pos_Tireur[1],x,y)) {
+
+         if(((Joueur) joueurs[0]).attaquer(pos_Tireur[0],pos_Tireur[1],x,y)) {
             etat= Ressources.Etats.Selection;
-            setChanged();
-            notifyObservers();
+            System.out.println(etat);
+
         }
+        if(((Joueur) joueurs[0]).GameOver()){
+            etat=Ressources.Etats.Gameover;
+
+            System.out.println(etat);
+        }
+        else if(((Joueur) joueurs[0]).gameWon()){
+            etat=Ressources.Etats.Won;
+
+            System.out.println(etat);
+        }
+
+        notify_views();
     }
 
     /**
@@ -207,14 +216,38 @@ public class Jeu extends Observable implements Serializable {
      * @return
      */
     public String[] getBateuTypes(){
-       String[]battype= epoque.getBateauType();
-       ArrayList<String> batrest=new ArrayList<>();
-       for(int i=0;i<battype.length;i++){
-           if(bateuxplacer[indBateu(battype[i])]>0)
-               batrest.add(battype[i]);
-       }
-       return batrest.toArray(new String[batrest.size()]);
+        String[]battype= epoque.getBateauType();
+        ArrayList<String> batrest=new ArrayList<>();
+        for(int i=0;i<battype.length;i++){
+            if(bateuxplacer[indBateu(battype[i])]>0)
+                batrest.add(battype[i]);
+        }
+        return batrest.toArray(new String[batrest.size()]);
     }
+
+
+    /*
+
+    ** notify if game over or won
+     */
+
+    public boolean estGameOW(){
+
+        if(((Joueur) joueurs[0]).GameOver()) {
+            etat=Ressources.Etats.Gameover;
+            return true;
+        }
+        else if(((Joueur) joueurs[0]).gameWon()){
+            etat=Ressources.Etats.Won;
+            return true;
+        }
+
+        return false;
+    }
+    /*
+    ** methode notifier
+     */
+
     public void notify_views(){
         setChanged();
         notifyObservers();
