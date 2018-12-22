@@ -794,7 +794,7 @@ public class FenetreJeu extends JFrame implements Observer {
         if (etat == Ressources.Etats.Gameover) {
             anime(Ressources.game_over_bg_img,6000);
         }
-        if (etat == Ressources.Etats.Win) {
+        if (etat == Ressources.Etats.Won) {
             anime(Ressources.win_bg_img,6000);
         }
 
