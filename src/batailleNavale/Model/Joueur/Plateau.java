@@ -298,21 +298,4 @@ public class Plateau implements Serializable {
         return plateau[x][y];
     }
 
-
-
-   public  static  void main(String [] args){
-        Plateau plateau = Plateau.getInstance(Ressources.epoques[0]);
-        plateau.poserBateau(new Point(1,1),new Point(1,4),Epoque1.TYPES[1]);
-        //plateau.poserBateau(new Point(1,1),new Point(4,1),Epoque1.TYPES[1]);
-        plateau.affichePlateu();
-       Tire tire = plateau.tirer(1, 1);
-       tire.setPositionCible(new int[]{1,1});
-       System.out.println(plateau.prendTire(tire));
-       plateau.affichePlateu();
-
-
-    }
-
-
-
 }
