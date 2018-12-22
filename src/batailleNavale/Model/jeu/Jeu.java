@@ -3,13 +3,16 @@ package batailleNavale.Model.jeu;
 
 import batailleNavale.Controleur.Controleur;
 import batailleNavale.DaoSauvegarde.UsineSaveLoad;
+import batailleNavale.Model.Bateaux.Tire;
 import batailleNavale.Model.Epoques.Epoque;
 import batailleNavale.Model.Joueur.AbstractJoueur;
 import batailleNavale.Model.Joueur.Joueur;
 import batailleNavale.Model.Joueur.Machine;
+import batailleNavale.Model.Joueur.Plateau;
 import batailleNavale.Ressources;
 import batailleNavale.Vues.FenetreJeu;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
@@ -51,8 +54,7 @@ public class Jeu extends Observable implements Serializable {
         etat=Ressources.Etats.Placement;
         creerJoueurs(nom, epoque);
         initaliserBateuxPlacer();
-        setChanged();
-        notifyObservers();
+        notify_views();
     }
 
     private void initaliserBateuxPlacer(){
@@ -141,8 +143,7 @@ public class Jeu extends Observable implements Serializable {
         if(((Joueur) joueurs[0]).getMyField().peutTirer(x,y)){
             etat=Ressources.Etats.Tire;
             pos_Tireur=new int[]{x,y};
-            setChanged();
-            notifyObservers();
+            notify_views();
         }
     }
 
@@ -152,21 +153,24 @@ public class Jeu extends Observable implements Serializable {
      * @param y coordonnée
      */
     public void tirer_cas(int x, int y){
-        if(((Joueur) joueurs[0]).attaquer(pos_Tireur[0],pos_Tireur[1],x,y)) {
+
+         if(((Joueur) joueurs[0]).attaquer(pos_Tireur[0],pos_Tireur[1],x,y)) {
             etat= Ressources.Etats.Selection;
+            System.out.println(etat);
+
+        }
+        if(((Joueur) joueurs[0]).gameOver()){
+            etat=Ressources.Etats.Gameover;
+
+            System.out.println(etat);
+        }
+        else if(((Joueur) joueurs[0]).gameWon()){
+            etat=Ressources.Etats.Won;
+
+            System.out.println(etat);
         }
 
-        if(joueurs[0].gameOver())
-            System.out.println("GAME OVER !!");
-        else if(joueurs[0].gameWon())
-            System.out.println("GAME WON !!");
-
-        System.out.println("**********************************************");
-        System.out.println("Machine Boats : ");
-        System.out.println("**********************************************");
-
-        setChanged();
-        notifyObservers();
+        notify_views();
     }
 
     /**
@@ -214,14 +218,38 @@ public class Jeu extends Observable implements Serializable {
      * @return
      */
     public String[] getBateuTypes(){
-       String[]battype= epoque.getBateauType();
-       ArrayList<String> batrest=new ArrayList<>();
-       for(int i=0;i<battype.length;i++){
-           if(bateuxplacer[indBateu(battype[i])]>0)
-               batrest.add(battype[i]);
-       }
-       return batrest.toArray(new String[batrest.size()]);
+        String[]battype= epoque.getBateauType();
+        ArrayList<String> batrest=new ArrayList<>();
+        for(int i=0;i<battype.length;i++){
+            if(bateuxplacer[indBateu(battype[i])]>0)
+                batrest.add(battype[i]);
+        }
+        return batrest.toArray(new String[batrest.size()]);
     }
+
+
+    /*
+
+    ** notify if game over or won
+     */
+
+    public boolean estGameOW(){
+
+        if(((Joueur) joueurs[0]).gameOver()) {
+            etat=Ressources.Etats.Gameover;
+            return true;
+        }
+        else if(((Joueur) joueurs[0]).gameWon()){
+            etat=Ressources.Etats.Won;
+            return true;
+        }
+
+        return false;
+    }
+    /*
+    ** methode notifier
+     */
+
     public void notify_views(){
         setChanged();
         notifyObservers();

@@ -799,7 +799,7 @@ public class FenetreJeu extends JFrame implements Observer {
             anime(jeu_section,img,5000);
             retoureDepart();
         }
-        if (etat == Ressources.Etats.Win) {
+        if (etat == Ressources.Etats.Won) {
 
         }
 
