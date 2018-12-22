@@ -32,16 +32,17 @@ public class Joueur extends AbstractJoueur implements Serializable {
     }
 
     public int [][] getMatriceOrdi(){
-        return ((Machine) next).getMatriceOrdi();
+        return next.getMyField().getTireMatrice();
     }
 
-    public Bateau monterBateau(Point p1, Point p2, int type){
+    public boolean monterBateau(Point p1, Point p2, int type){
             Bateau b = myField.poserBateau(p1,p2, type);
             if(b != null) {
                 myBoats.add(b);
                 remainingBoeatToPlace--;
+                return true;
             }
-            return b;
+            return false;
     }
 
     /**

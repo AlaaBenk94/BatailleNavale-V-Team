@@ -152,7 +152,7 @@ public class Plateau implements Serializable {
             if(plateau2[x][y])return Ressources.casedesTire[0];
             else return Ressources.casedesTire[2];
         }else{
-            if(bateau.get_res_Cas(x,y)==0){
+            if(bateau.get_res_Cas(x,y)<=0){
                 return Ressources.casedesTire[2];
             }
             if(bateau.get_res_Cas(x,y)<bateau.getResistance()){
@@ -197,6 +197,7 @@ public class Plateau implements Serializable {
     public Ressources.TireEtats prendTire(Tire tire){
         int x = tire.getPositionCible()[0];
         int y = tire.getPositionCible()[1];
+        System.out.println(estNoyer(x,y));
         if(!estNoyer(x, y)) {
             if(plateau[x][y]==null){
                 plateau2[x][y] = false;
@@ -278,7 +279,7 @@ public class Plateau implements Serializable {
     /**
      * affichage de platreau
      */
-    void  affichePlateu(){
+    public void  affichePlateu(){
         for(int i =0 ;i<plateau.length;i++) {
             System.out.println();
             for (int j = 0; j < plateau.length; j++) {
@@ -286,7 +287,7 @@ public class Plateau implements Serializable {
                  if (plateau2[j][i]) System.out.print("  B  ");
                  else System.out.print("  B  ");
              }else {
-                 System.out.print("  "+plateau[j][i].getType()+"  ");
+                 System.out.print("  "+plateau[j][i].get_res_Cas(j,i)+"  ");
              }
             }
         }
@@ -303,7 +304,10 @@ public class Plateau implements Serializable {
         plateau.poserBateau(new Point(1,1),new Point(1,4),Epoque1.TYPES[1]);
         //plateau.poserBateau(new Point(1,1),new Point(4,1),Epoque1.TYPES[1]);
         plateau.affichePlateu();
-       plateau.getinfobateucase(1,1);
+       Tire tire = plateau.tirer(1, 1);
+       tire.setPositionCible(new int[]{1,1});
+       System.out.println(plateau.prendTire(tire));
+       plateau.affichePlateu();
 
 
     }

@@ -31,10 +31,7 @@ public class BateauEP2 extends Bateau {
     }
 
     public void preandFeu(Tire tire){
-
-        this.resistance-=tire.getForce();
         int ciblecas=calculeCas(tire.getPositionCible());
-        System.out.println(ciblecas);
         if(ciblecas>-1)cas[ciblecas]-=tire.getForce();
     }
 
