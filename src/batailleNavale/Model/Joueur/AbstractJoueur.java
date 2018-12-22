@@ -3,6 +3,8 @@ package batailleNavale.Model.Joueur;
 import batailleNavale.Model.Bateaux.Bateau;
 import batailleNavale.Model.Bateaux.Tire;
 
+import static batailleNavale.Ressources.TireEtats;
+
 import java.util.ArrayList;
 
 import static batailleNavale.Ressources.epoques;
@@ -146,5 +148,23 @@ public abstract class AbstractJoueur {
 			total += b.getProjectiles();
 		return total;
 	}
+
+	/**
+	 * cette methode permet au joueur d'attaquer
+	 * @param xbateu
+	 * @param ybateu
+	 * @param ciblex
+	 * @param cibley
+	 * @return
+	 */
     public abstract boolean attaquer(int xbateu, int ybateu, int ciblex, int cibley);
+
+	/**
+	 * cette methode gere les degats d'un tire d'enemie.
+	 * @param tire
+	 * @return
+	 */
+	public TireEtats prendreFeu(Tire tire){
+		return myField.prendTire(tire);
+	}
 }
