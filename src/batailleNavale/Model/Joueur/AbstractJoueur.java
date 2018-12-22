@@ -135,6 +135,16 @@ public abstract class AbstractJoueur {
 		this.myTurn = myTurn;
 	}
 
-
+	/**
+	 * recuperer le nombre total des projectiles restants
+	 * sur tous les bateaux
+	 * @return
+	 */
+	public int nombreProjectilesTotale(){
+		int total = 0;
+		for (Bateau b : myBoats)
+			total += b.getProjectiles();
+		return total;
+	}
     public abstract boolean attaquer(int xbateu, int ybateu, int ciblex, int cibley);
 }

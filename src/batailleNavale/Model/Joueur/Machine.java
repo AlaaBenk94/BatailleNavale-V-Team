@@ -35,11 +35,17 @@ public class Machine extends AbstractJoueur {
     /**
      * methode qui place les bateaux de la machine
      * aléatoirement.
+     *
+     * ======= TO MODIFY =======
+     * ======= TO MODIFY =======
+     *
      */
     public void initializeBoatPosition(String epoque) {
         for(int t : Epoque.getEpoque(epoque).getBateauxSize()) {
-            Point pos = getRandomPosition();
-
+            Point pos1 = getRandomPosition();
+            Point pos2 = new Point(pos1);
+            pos2.translate(t, 0);
+            myField.poserBateau(pos1, pos2, t);
         }
     }
 
