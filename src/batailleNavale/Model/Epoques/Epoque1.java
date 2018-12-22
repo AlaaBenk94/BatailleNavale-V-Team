@@ -11,7 +11,7 @@ public class Epoque1 extends Epoque {
     public  static final String NOMEPOQUE= Ressources.epoques[0];
     public  static final String[] NOMTYPES={"TYPE1","TYPE2","TYPE3"};
     public  static final int[] TYPES={2,3,5};
-    public  static final int[] FORCES={2,3,5};
+    public  static final int[] FORCES={1,2,3};
     public  static final int[] RESISTANCES={2,3,3};
 
 
