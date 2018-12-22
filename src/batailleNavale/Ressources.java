@@ -39,5 +39,4 @@ public class Ressources implements Serializable {
 
 
 
-
 }
