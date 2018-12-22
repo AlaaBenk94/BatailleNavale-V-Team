@@ -1,5 +1,6 @@
 package batailleNavale.Model.Joueur;
 
+import batailleNavale.Model.Bateaux.Bateau;
 import batailleNavale.Model.Bateaux.Tire;
 import batailleNavale.Model.Epoques.Epoque;
 import batailleNavale.Ressources;
@@ -19,6 +20,7 @@ public class Machine extends AbstractJoueur {
      */
     public Machine(String epoque) {
         super("Machine", epoque);
+        initializeBoatPosition(epoque);
     }
 
     /**
@@ -29,7 +31,6 @@ public class Machine extends AbstractJoueur {
     public Machine(String epoque,Tirer strategy) {
         this(epoque);
         this.strategy = strategy;
-        initializeBoatPosition(epoque);
     }
 
     /**
@@ -41,21 +42,43 @@ public class Machine extends AbstractJoueur {
      *
      */
     public void initializeBoatPosition(String epoque) {
+
         for(int t : Epoque.getEpoque(epoque).getBateauxSize()) {
-            Point pos1 = getRandomPosition();
-            Point pos2 = new Point(pos1);
-            pos2.translate(t, 0);
-            myField.poserBateau(pos1, pos2, t);
+
+            Bateau b = null;
+            while(b == null) {
+                Point[] pos = getRandomPosition(t);
+                b =myField.poserBateau(pos[0], pos[1], t);
+            }
+            myBoats.add(b);
+
         }
+
+        System.out.println("********************************************");
+        for(Bateau b : myBoats)
+            System.out.println(b.getNom() + " : " +
+                    "[(" + b.getPosition()[0][0] + "," + b.getPosition()[0][1] + "),(" +
+                    b.getPosition()[1][0] + "," + b.getPosition()[1][1] + ")].");
+        System.out.println("********************************************");
+
     }
+
 
     /**
      * methode qui genere une position dans le plateau aléatoirement.
      * @return
      */
-    private Point getRandomPosition(){
+    private Point[] getRandomPosition(int t){
         Random rand = new Random();
-        return new Point(rand.nextInt(Ressources.Hauteur-1), rand.nextInt(Ressources.Largeur-1));
+        Point posX = new Point(rand.nextInt(Ressources.Hauteur-1), rand.nextInt(Ressources.Largeur-1));
+        Point posY = new Point(posX);
+        int k = t-1;
+        if(rand.nextBoolean())
+            posY.translate(k,0);
+        else
+            posY.translate(0, k);
+
+        return new Point[]{posX, posY};
     }
 
     @Override
