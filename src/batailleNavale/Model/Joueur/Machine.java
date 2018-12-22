@@ -8,6 +8,9 @@ import batailleNavale.Ressources;
 import java.awt.*;
 import java.util.Random;
 
+import static batailleNavale.Ressources.Hauteur;
+import static batailleNavale.Ressources.Largeur;
+
 /**
  * Cette classe represente la machine (adversaire).
  */
@@ -34,12 +37,9 @@ public class Machine extends AbstractJoueur {
     }
 
     /**
-     * methode qui place les bateaux de la machine
-     * aléatoirement.
-     *
-     * ======= TO MODIFY =======
-     * ======= TO MODIFY =======
-     *
+     * methode qui permet de creer & placer
+     * les bateaux de la machine # aléatoirement #.
+     * @Param epoque Epoque choisi.
      */
     public void initializeBoatPosition(String epoque) {
 
@@ -54,6 +54,9 @@ public class Machine extends AbstractJoueur {
 
         }
 
+        /**
+         * AFFICHAGE PROVISOIRE DE MATRICE DES BATEAUX
+         */
         System.out.println("********************************************");
         for(Bateau b : myBoats)
             System.out.println(b.getNom() + " : " +
@@ -70,19 +73,34 @@ public class Machine extends AbstractJoueur {
      */
     private Point[] getRandomPosition(int t){
         Random rand = new Random();
-        Point posX = new Point(rand.nextInt(Ressources.Hauteur-1), rand.nextInt(Ressources.Largeur-1));
+        Point posX = new Point(rand.nextInt(Hauteur-1), rand.nextInt(Ressources.Largeur-1));
         Point posY = new Point(posX);
         int k = t-1;
         if(rand.nextBoolean())
-            posY.translate(k,0);
+            if(k >= Hauteur-1)
+                posY.translate(-k,0);
+            else
+                posY.translate(k,0);
         else
-            posY.translate(0, k);
+            if(k >= Largeur-1)
+                posY.translate(0, -k);
+            else
+                posY.translate(0, k);
 
         return new Point[]{posX, posY};
     }
 
+    /**
+     * Cette methode permet a la machine de Jouer
+     * c-a-d choisir des bateaux qui tirent et les position cible
+     */
     @Override
     public void jouer() {
+
+        // choisir le bateaux
+        // choisir la position cible
+        // tanque est tjrs mon tour jouer.
+
 
     }
 
