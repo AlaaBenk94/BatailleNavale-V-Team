@@ -76,19 +76,13 @@ public class Machine extends AbstractJoueur {
      */
     private Point[] getRandomPosition(int t){
         Random rand = new Random();
-        Point posX = new Point(rand.nextInt(Hauteur-1), rand.nextInt(Ressources.Largeur-1));
+        Point posX = new Point(rand.nextInt(Hauteur-t), rand.nextInt(Ressources.Largeur-t));
         Point posY = new Point(posX);
         int k = t-1;
         if(rand.nextBoolean())
-            if(k >= Hauteur-1)
-                posY.translate(-k,0);
-            else
-                posY.translate(k,0);
+            posY.translate(k,0);
         else
-            if(k >= Largeur-1)
-                posY.translate(0, -k);
-            else
-                posY.translate(0, k);
+            posY.translate(0, k);
 
         return new Point[]{posX, posY};
     }
