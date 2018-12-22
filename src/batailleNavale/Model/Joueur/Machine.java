@@ -51,17 +51,20 @@ public class Machine extends AbstractJoueur {
                 b =myField.poserBateau(pos[0], pos[1], t);
             }
             myBoats.add(b);
-
+            remainingBoeatToPlace--;
         }
 
         /**
          * AFFICHAGE PROVISOIRE DE MATRICE DES BATEAUX
          */
         System.out.println("********************************************");
+        System.out.println("REMAINING BOATS : " + remainingBoeatToPlace);
         for(Bateau b : myBoats)
             System.out.println(b.getNom() + " : " +
                     "[(" + b.getPosition()[0][0] + "," + b.getPosition()[0][1] + "),(" +
                     b.getPosition()[1][0] + "," + b.getPosition()[1][1] + ")].");
+        System.out.println("********************************************");
+        myField.affichePlateu();
         System.out.println("********************************************");
 
     }
@@ -97,11 +100,47 @@ public class Machine extends AbstractJoueur {
     @Override
     public void jouer() {
 
-        // choisir le bateaux
-        // choisir la position cible
-        // tanque est tjrs mon tour jouer.
+        System.out.println("YAY C'EST MON TOUR XD");
+
+        do {
+            // choisir le bateaux
+            Bateau b = getRandomBoat();
+
+            /**
+             * IF b == NULL ==> NO REMAINING MISSILES.
+             * THE MACHINE LOSES.
+             */
+            if (b == null) {
+                return;
+            }
+
+            // passer a la fonction tirer
+            myTurn = strategy.tirer(next, b);
+
+        } while (myTurn);
 
 
+    }
+
+    /**
+     * Permet de recuperer un bateau qui tire
+     * Semi - Aléatoirement
+     * @return
+     */
+    private Bateau getRandomBoat(){
+
+        Random r = new Random();
+        int size = myBoats.size()-1;
+        int index;
+
+        if((nombreProjectilesTotale() == 0))
+            return null;
+
+        do {
+           index = r.nextInt(size);
+        } while(myBoats.get(index).getProjectiles() < 1);
+
+        return myBoats.get(index);
     }
 
     @Override

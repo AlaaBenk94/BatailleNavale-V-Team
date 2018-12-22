@@ -1,8 +1,11 @@
 package batailleNavale.Model.Joueur;
 
-public class Croise implements Tirer {
-    @Override
-    public void Tirer() {
+import batailleNavale.Model.Bateaux.Bateau;
 
+public class Croise implements Tirer {
+
+    @Override
+    public boolean tirer(AbstractJoueur player, Bateau boat) {
+        return false;
     }
 }
