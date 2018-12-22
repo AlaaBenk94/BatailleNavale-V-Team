@@ -163,7 +163,7 @@ public class Jeu extends Observable implements Serializable {
             System.out.println(etat);
         }
         else if(((Joueur) joueurs[0]).gameWon()){
-            etat=Ressources.Etats.Won;
+            etat=Ressources.Etats.Win;
 
             System.out.println(etat);
         }
@@ -238,7 +238,7 @@ public class Jeu extends Observable implements Serializable {
             return true;
         }
         else if(((Joueur) joueurs[0]).gameWon()){
-            etat=Ressources.Etats.Won;
+            etat=Ressources.Etats.Win;
             return true;
         }
 
