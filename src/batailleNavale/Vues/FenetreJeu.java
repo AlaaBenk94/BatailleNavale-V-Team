@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -35,7 +36,7 @@ public class FenetreJeu extends JFrame implements Observer {
 
     private Ressources.Etats etat = Ressources.Etats.Menu;
     private JTabbedPane selecteur_fenetre;
-    private JPanel jeu_section, plateau_bateu, barre_jeu, plateau_tire, menu_section, menu, menuprincipale, menucontenu;
+    private JPanel game,jeu_section, plateau_bateu, barre_jeu, plateau_tire, menu_section, menu, menuprincipale, menucontenu;
     private JScrollPane menupanel;
     private JPanel joueurmatrice[][];
     private JPanel advercairematrice[][];
@@ -303,7 +304,7 @@ public class FenetreJeu extends JFrame implements Observer {
         menuconstruction();
         selecteur_fenetre.addTab("MENU", menu_section);
         selecteur_fenetre.setSelectedIndex(1);
-        this.add(selecteur_fenetre);
+        this.getContentPane().add(selecteur_fenetre);
 
         selecteur_fenetre.setIconAt(0, new ImageIcon(Ressources.jeu_icon));
         selecteur_fenetre.setIconAt(1, new ImageIcon(Ressources.menu_icon));
@@ -687,7 +688,6 @@ public class FenetreJeu extends JFrame implements Observer {
             //joueurmatrice[j][i].setBackground(Color.red);
             controleur.selecinner_cas_bateu_qui_tire(i, j);
         }
-        t=1;
     }
 
     private void adversaireMatriceClick(java.awt.event.MouseEvent evt) {
@@ -758,12 +758,9 @@ public class FenetreJeu extends JFrame implements Observer {
                 advercairematrice[i][j].setBackground(Ressources.casedestirecolor[etat]);
             }
     }
-    int t=0;
-
     @Override
     public void update(Observable o, Object arg) {
         etat = modele.getetat();
-        //if(t==1){etat=Ressources.Etats.Gameover;t=0;}
         // System.out.println("etat :"+etat);
         if (etat == Ressources.Etats.Placement) {
             upDateMatrice(modele.getBateauMatrice(), modele.getTireMatrice());
@@ -795,37 +792,36 @@ public class FenetreJeu extends JFrame implements Observer {
             dispose();
         }
         if (etat == Ressources.Etats.Gameover) {
-            File img[] ={new File(Ressources.menu_bg_img)};
-            anime(jeu_section,img,5000);
-            retoureDepart();
+            anime(Ressources.game_over_bg_img,6000);
         }
         if (etat == Ressources.Etats.Win) {
-
+            anime(Ressources.win_bg_img,6000);
         }
 
     }
-    private void anime(JPanel panel,File[] img,int time){
-        for(int i=0;i<img.length;i++){
-            File imgfile = img[i];
-            panel=new javax.swing.JPanel(){
+
+    private void anime(String img,int time){
+            ImageIcon ii = new ImageIcon(img);
+            JLabel imgl=new JLabel();
+            imgl.setIcon(ii);
+            changerbg(imgl);
+            ActionListener action = new ActionListener() {
                 @Override
-                protected void paintComponent (Graphics g){
-                    super.paintComponent(g);
-                    try {
-                        g.drawImage(ImageIO.read(imgfile), 0, 0, null);
-                    } catch (IOException ex) {
-                        Logger.getLogger(FenetreJeu.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                public void actionPerformed(ActionEvent e) {
+                    retoureDepart();
                 }
             };
-            try {
-                Thread.sleep(time);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+            Timer timer = new Timer(time, action);
+            timer.start();
+
+    }
+    private void changerbg(JLabel label){
+        this.getContentPane().removeAll();
+        this.getContentPane().add(label);
+        this.setVisible(true);
     }
     private void retoureDepart() {
+    this.getContentPane().removeAll();
     selecteur_fenetre.setSelectedIndex(0);
     construction();
     caseposibles =new LinkedList<>();
