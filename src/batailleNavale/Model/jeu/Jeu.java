@@ -285,16 +285,6 @@ public class Jeu extends Observable implements Serializable {
      */
     public void setetat(Ressources.Etats etat){
         this.etat=etat;
-        setChanged();
-        notifyObservers();
-    }
-
-    public void affm(int[][] t){
-        for(int i =0 ; i<t.length;i++) {
-            System.out.println();
-            for (int j = 0; j < t.length; j++)
-                System.out.print(" " + t[i][j] + " ");
-        }
     }
 
 }

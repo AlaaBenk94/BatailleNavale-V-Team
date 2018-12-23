@@ -236,7 +236,6 @@ public class FenetreJeu extends JFrame implements Observer {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    System.out.println(ImageIO.read(new File(Ressources.menu_bg_img)) == null);
                     g.drawImage(ImageIO.read(new File(Ressources.menu_bg_img)), 0, 0, null);
                 } catch (IOException ex) {
                     Logger.getLogger(FenetreJeu.class.getName()).log(Level.SEVERE, null, ex);
@@ -761,7 +760,7 @@ public class FenetreJeu extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         etat = modele.getetat();
-        // System.out.println("etat :"+etat);
+         System.out.println("etat :"+etat);
         if (etat == Ressources.Etats.Placement) {
             upDateMatrice(modele.getBateauMatrice(), modele.getTireMatrice());
             selecteur_fenetre.setSelectedIndex(0);
@@ -799,7 +798,7 @@ public class FenetreJeu extends JFrame implements Observer {
         }
 
     }
-
+    private Timer timer;
     private void anime(String img,int time){
             ImageIcon ii = new ImageIcon(img);
             JLabel imgl=new JLabel();
@@ -811,9 +810,8 @@ public class FenetreJeu extends JFrame implements Observer {
                     retoureDepart();
                 }
             };
-            Timer timer = new Timer(time, action);
+            timer = new Timer(time, action);
             timer.start();
-
     }
     private void changerbg(JLabel label){
         this.getContentPane().removeAll();
@@ -821,13 +819,14 @@ public class FenetreJeu extends JFrame implements Observer {
         this.setVisible(true);
     }
     private void retoureDepart() {
+        timer.stop();
     this.getContentPane().removeAll();
     selecteur_fenetre.setSelectedIndex(0);
     construction();
     caseposibles =new LinkedList<>();
     caseselectioner=new LinkedList<>();
-    etat=Ressources.Etats.Menu;
-    modele.setetat(etat);
+    modele.setetat(Ressources.Etats.Menu);
+    update(null,null);
     }
 
     private String selectioner_un_ficher(int type){
