@@ -19,6 +19,7 @@ public class Jeu extends Observable implements Serializable {
     String nompartie;
     Epoque epoque;
     Ressources.Etats etat=Ressources.Etats.Menu;
+    Ressources.Etats etatp;
     AbstractJoueur[] joueurs;
     private int[]pos_Tireur;
     private int[] bateuxplacer;
@@ -45,9 +46,9 @@ public class Jeu extends Observable implements Serializable {
      * @param epoque
      */
     public void nouvellepartie(String nom, String epoque){
-        System.out.println("new partie" + nom + " epoque " + epoque);
         nompartie=nom;
         this.epoque=Epoque.getEpoque(epoque);
+
         etat=Ressources.Etats.Placement;
         creerJoueurs(nom, epoque);
         initaliserBateuxPlacer();
@@ -122,8 +123,10 @@ public class Jeu extends Observable implements Serializable {
             }
         }
 
-        if(toutsPlacer())
-            etat= Ressources.Etats.Selection;
+        if(toutsPlacer()) {
+
+            etat = Ressources.Etats.Selection;
+        }
         setChanged();
         notifyObservers();
 
@@ -135,9 +138,9 @@ public class Jeu extends Observable implements Serializable {
      * @param y
      */
     public void selecinner_cas_bateu_qui_tire(int x, int y){
-        System.out.println("select "+x+","+y);
         joueurs[0].getMyField().tirer(x,y);
         if(((Joueur) joueurs[0]).getMyField().peutTirer(x,y)){
+
             etat=Ressources.Etats.Tire;
             pos_Tireur=new int[]{x,y};
             notify_views();
@@ -152,16 +155,19 @@ public class Jeu extends Observable implements Serializable {
     public void tirer_cas(int x, int y){
 
          if(((Joueur) joueurs[0]).attaquer(pos_Tireur[0],pos_Tireur[1],x,y)) {
+
             etat= Ressources.Etats.Selection;
             System.out.println(etat);
 
         }
         if(((Joueur) joueurs[0]).gameOver()){
+
             etat=Ressources.Etats.Gameover;
 
             System.out.println(etat);
         }
         else if(((Joueur) joueurs[0]).gameWon()){
+
             etat=Ressources.Etats.Win;
 
             System.out.println(etat);
@@ -259,14 +265,15 @@ public class Jeu extends Observable implements Serializable {
      */
     public void chargerpartie(String lien,FenetreJeu fenetre){
         Jeu partiecharger=UsineSaveLoad.getUsineSaveLoad("ser").charger(lien);
-        Ressources.Etats etatp = partiecharger.getetat();
+        Ressources.Etats etatp = partiecharger.getetatp();
         if(partiecharger!=null){
             fenetre.close();
             Controleur c=new Controleur(partiecharger);
             fenetre=new FenetreJeu(partiecharger,c);
+            fenetre.setetat(etatp);
             fenetre.setVisible(true);
             partiecharger.setetat(etatp);
-            notify_views();
+            partiecharger.notify_views();
         }
 
     }
@@ -277,6 +284,7 @@ public class Jeu extends Observable implements Serializable {
      */
     public void sauvgarder(String lien){
         Ressources.Etats etatr=etat;
+        etat=etatp;
         UsineSaveLoad.getUsineSaveLoad("ser").sauvegarder(this,lien);
         etat=etatr;
     }
@@ -289,4 +297,10 @@ public class Jeu extends Observable implements Serializable {
         this.etat=etat;
     }
 
+    public void setetatp(Ressources.Etats etatp) {
+        this.etatp=etatp;
+    }
+    private Ressources.Etats getetatp(){
+        return this.etatp;
+    }
 }

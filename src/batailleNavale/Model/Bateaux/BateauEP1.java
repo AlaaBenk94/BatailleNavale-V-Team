@@ -1,6 +1,8 @@
 package batailleNavale.Model.Bateaux;
 
-public class BateauEP1 extends Bateau {
+import java.io.Serializable;
+
+public class BateauEP1 extends Bateau implements Serializable {
 
     public BateauEP1(String nom, String epoque, int type, int force, int resistance) {
         super(nom, epoque, type, force, resistance);

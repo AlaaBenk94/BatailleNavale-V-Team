@@ -5,6 +5,7 @@ import batailleNavale.Model.Epoques.Epoque;
 import batailleNavale.Ressources;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Random;
 
 import static batailleNavale.Ressources.Hauteur;
@@ -13,7 +14,7 @@ import static batailleNavale.Ressources.Largeur;
 /**
  * Cette classe represente la machine (adversaire).
  */
-public class Machine extends AbstractJoueur {
+public class Machine extends AbstractJoueur implements Serializable {
 
     private Tirer strategy;
 

@@ -4,10 +4,11 @@ import batailleNavale.Model.Bateaux.Bateau;
 import batailleNavale.Model.Bateaux.BateauEP1;
 import batailleNavale.Ressources;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Epoque1 extends Epoque {
+public class Epoque1 extends Epoque implements Serializable {
     public  static final String NOMEPOQUE= Ressources.epoques[0];
     public  static final String[] NOMTYPES={"torpilleur ","sous-marin ","croiseur ", "porte-avion"};
     public  static final int[] TYPES={2,3,4,5};

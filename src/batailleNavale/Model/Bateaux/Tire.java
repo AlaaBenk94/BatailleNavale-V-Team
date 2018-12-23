@@ -1,6 +1,8 @@
 package batailleNavale.Model.Bateaux;
 
-public class Tire {
+import java.io.Serializable;
+
+public class Tire implements Serializable {
 
 	private int tireur;
 	private int[] PositionCible;

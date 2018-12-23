@@ -4,6 +4,7 @@ import batailleNavale.Model.Bateaux.Bateau;
 import batailleNavale.Ressources;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -11,7 +12,7 @@ import static batailleNavale.Ressources.Hauteur;
 import static batailleNavale.Ressources.Largeur;
 import static batailleNavale.Ressources.TireEtats.TVide;
 
-public class Croise implements Tirer {
+public class Croise implements Tirer , Serializable {
 
     Random rand;
     ArrayList<Point> pointsList;

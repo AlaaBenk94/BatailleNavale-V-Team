@@ -6,13 +6,14 @@ import batailleNavale.Model.Epoques.Epoque;
 
 import static batailleNavale.Ressources.TireEtats;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  * Cette classe definie les attributs et le comportement en commun des joueurs de differents type : Homme et machine.
  */
-public abstract class AbstractJoueur {
+public abstract class AbstractJoueur implements Serializable {
 
 	protected Plateau myField;
 	protected String name;
