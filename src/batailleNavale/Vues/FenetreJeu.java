@@ -35,6 +35,7 @@ public class FenetreJeu extends JFrame implements Observer {
     private Controleur controleur;
 
     private Ressources.Etats etat = Ressources.Etats.Menu;
+    Ressources.Etats etatp=Ressources.Etats.Menu;
     private JTabbedPane selecteur_fenetre;
     private JPanel game,jeu_section, plateau_bateu, barre_jeu, plateau_tire, menu_section, menu, menuprincipale, menucontenu;
     private JScrollPane menupanel;
@@ -760,6 +761,7 @@ public class FenetreJeu extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         etat = modele.getetat();
+        if(etat!=Ressources.Etats.Menu){ modele.setetatp(etat);}
          System.out.println("etat :"+etat);
         if (etat == Ressources.Etats.Placement) {
             upDateMatrice(modele.getBateauMatrice(), modele.getTireMatrice());
@@ -778,6 +780,7 @@ public class FenetreJeu extends JFrame implements Observer {
             update_case_desponible();
         }
         if (etat == Ressources.Etats.Selection || etat == Ressources.Etats.Tire) {
+            etatp=etat;
             upDateMatrice(modele.getBateauMatrice(), modele.getTireMatrice());
             selecteur_fenetre.setSelectedIndex(0);
             String[] typebat = modele.getBateuTypes();
@@ -825,6 +828,7 @@ public class FenetreJeu extends JFrame implements Observer {
     construction();
     caseposibles =new LinkedList<>();
     caseselectioner=new LinkedList<>();
+    etatp=modele.getetat();
     modele.setetat(Ressources.Etats.Menu);
     update(null,null);
     }
@@ -852,9 +856,10 @@ public class FenetreJeu extends JFrame implements Observer {
         setVisible(false);
         dispose();
     }
-    public void getetat(Ressources.Etats etat){
+    public void setetat(Ressources.Etats etat){
         this.etat=etat;
     }
+    public Ressources.Etats getetp(){return etatp;}
     public Ressources.Etats getetat(){
         return this.etat;
     }

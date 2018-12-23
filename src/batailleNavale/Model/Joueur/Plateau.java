@@ -120,7 +120,7 @@ public class Plateau implements Serializable {
             if(!plateau2[x][y])return Ressources.casedesbateuau[1];
             else return Ressources.casedesbateuau[0];
         }else{
-           return Ressources.casedesbateuau[bateau.getResistance()];
+           return Ressources.casedesbateuau[bateau.get_res_Cas(x,y)];
         }
     }
 

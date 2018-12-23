@@ -2,7 +2,9 @@ package batailleNavale.Model.Bateaux;
 
 import batailleNavale.Ressources;
 
-public abstract class Bateau {
+import java.io.Serializable;
+
+public abstract class Bateau implements Serializable {
 
 	protected int[][] position;
 	protected String nom;

@@ -2,7 +2,9 @@ package batailleNavale.Model.Joueur;
 
 import batailleNavale.Model.Bateaux.Bateau;
 
-public interface Tirer {
+import java.io.Serializable;
+
+public interface Tirer{
 
 	/**
 	 * Cette methode permet de joueur selon une strategie

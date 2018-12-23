@@ -1,5 +1,6 @@
 package batailleNavale.Model.Joueur;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import batailleNavale.Model.Bateaux.Bateau;
@@ -9,7 +10,7 @@ import static batailleNavale.Ressources.TireEtats;
 import static batailleNavale.Ressources.TireEtats.TVide;
 import static batailleNavale.Ressources.TireEtats.Timposible;
 
-public class Aleatoire implements Tirer {
+public class Aleatoire implements Tirer, Serializable {
 
     Random rand;
 
