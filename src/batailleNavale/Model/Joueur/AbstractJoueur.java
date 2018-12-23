@@ -5,8 +5,6 @@ import batailleNavale.Model.Bateaux.Tire;
 import batailleNavale.Model.Epoques.Epoque;
 
 import static batailleNavale.Ressources.TireEtats;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

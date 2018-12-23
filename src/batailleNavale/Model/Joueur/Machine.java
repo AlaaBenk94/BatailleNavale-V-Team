@@ -23,7 +23,7 @@ public class Machine extends AbstractJoueur {
     public Machine(String epoque) {
         super("Machine", epoque);
         initializeBoatPosition(epoque);
-        this.strategy = Croise.getInstance();
+        this.strategy = Aleatoire.getInstance();
     }
 
     /**
