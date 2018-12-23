@@ -9,10 +9,10 @@ import java.util.Map;
 
 public class Epoque1 extends Epoque {
     public  static final String NOMEPOQUE= Ressources.epoques[0];
-    public  static final String[] NOMTYPES={"TYPE1","TYPE2","TYPE3"};
-    public  static final int[] TYPES={2,3,5};
-    public  static final int[] FORCES={1,2,3};
-    public  static final int[] RESISTANCES={2,3,3};
+    public  static final String[] NOMTYPES={"torpilleur ","sous-marin ","croiseur ", "porte-avion"};
+    public  static final int[] TYPES={2,3,4,5};
+    public  static final int[] FORCES={1,2,3,4};
+    public  static final int[] RESISTANCES={2,3,4,4};
 
 
     private static Epoque epoque1;
@@ -27,6 +27,7 @@ public class Epoque1 extends Epoque {
         if(type== TYPES[0])return new BateauEP1(NOMTYPES[0],NOMEPOQUE,TYPES[0],FORCES[0],RESISTANCES[0]);
         if(type== TYPES[1])return new BateauEP1(NOMTYPES[1],NOMEPOQUE,TYPES[1],FORCES[1],RESISTANCES[1]);
         if(type== TYPES[2])return new BateauEP1(NOMTYPES[2],NOMEPOQUE,TYPES[2],FORCES[2],RESISTANCES[2]);
+        if(type== TYPES[3])return new BateauEP1(NOMTYPES[3],NOMEPOQUE,TYPES[3],FORCES[3],RESISTANCES[3]);
         return null;
     }
 
