@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Ressources implements Serializable {
 
     public static final int NBBATEUDECHAQUETYPE=1;
-    public static final int NBPROJECTILEPARCASE=1;
+    public static final int NBPROJECTILEPARCASE=3;
 
     public static final int Largeur=10;
     public static final int Hauteur=10;
