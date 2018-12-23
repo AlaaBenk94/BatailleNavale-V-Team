@@ -36,7 +36,7 @@ public class Ressources implements Serializable {
     public enum Etats{Menu,Placement,Selection,Tire,Fermer,Gameover, Win};
     public enum TireEtats{TBateau,TVide,Timposible};
 
-    public static final String[] epoques={"epoque-XX-siecle","epoque-XVI-siecle"};
+    public static final String[] epoques={"XX-siecle","XVI-siecle"};
 
 
 
