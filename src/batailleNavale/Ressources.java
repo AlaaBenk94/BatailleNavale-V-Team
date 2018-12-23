@@ -18,12 +18,12 @@ public class Ressources implements Serializable {
     public static final int Hauteurgrille=500;
     public static final int fenetreLargeur=1200;
     public static final int fenetreHeauteur=600;
-    public static final String menu_bg_img= "src/batailleNavale/img_ressource/bgmenu.png";
-    public static final String game_over_bg_img= "src/batailleNavale/img_ressource/gameover.gif";
-    public static final String win_bg_img= "src/batailleNavale/img_ressource/win.gif";
-    public static final String barre_bg_img= "src/batailleNavale/img_ressource/barrebg.png";
-    public static final String jeu_icon= "src/batailleNavale/img_ressource/jeuicon.png";
-    public static final String menu_icon= "src/batailleNavale/img_ressource/menuicon.png";
+    public static final String menu_bg_img= "bgmenu.png";
+    public static final String game_over_bg_img= "gameover.gif";
+    public static final String win_bg_img= "win.gif";
+    public static final String barre_bg_img= "barrebg.png";
+    public static final String jeu_icon= "jeuicon.png";
+    public static final String menu_icon= "menuicon.png";
 
     public static final Color[] casedesbateuaucolors=  {Color.decode("#1C1C1C"),Color.decode("#2A0A12"),Color.decode("#FFFDE7"),Color.decode("#FFF59D"),Color.decode("#FDD835"),Color.decode("#F57F17"),Color.decode("#FFF59D")};
     public static final Color[] casedestirecolor={Color.decode("#003366"),Color.decode("#00E676"),Color.decode("#212121")};
@@ -37,9 +37,5 @@ public class Ressources implements Serializable {
     public enum TireEtats{TBateau,TVide,Timposible};
 
     public static final String[] epoques={"XX-siecle","XVI-siecle"};
-
-
-
-
 
 }
