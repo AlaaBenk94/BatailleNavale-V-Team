@@ -17,6 +17,3 @@ HAFIANE Walid @hafianewalid;
 
 ## Comment lancer le jeu 
 $ java -jar BatailleNavale-V-Team.jar
-
-## REMARQUE
-Veuillez ne pas deplacer le jar.
