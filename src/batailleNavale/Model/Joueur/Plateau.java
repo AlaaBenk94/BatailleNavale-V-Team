@@ -46,7 +46,7 @@ public class Plateau implements Serializable {
 
     /**
      * methode factory de plateau
-     * cette methode crée les instances Plateau pour nous.
+     * cette methode cree les instances Plateau pour nous.
      * @return une instance de Plateau.
      */
     public static Plateau getInstance(String epoque) {
@@ -55,7 +55,7 @@ public class Plateau implements Serializable {
 
 
     /**
-     * méthode qui vérifie si le bateau est horizontal ou vertival
+     * methode qui verifie si le bateau est horizontal ou vertival
      **/
 
     private boolean estHV(Point p1, Point p2){
@@ -64,7 +64,7 @@ public class Plateau implements Serializable {
     }
 
     /**
-     * méthode qui vérifie si LES POINTS de dépot du bateau débordent pas sur le plateau
+     * methode qui verifie si LES POINTS de depot du bateau debordent pas sur le plateau
      **/
 
     private boolean estDeborde(Point p1, Point p2){
@@ -74,7 +74,7 @@ public class Plateau implements Serializable {
 
 
     /**
-     * méthode qui vérifie si un bateau est détruit
+     * methode qui verifie si un bateau est detruit
      **/
 
     boolean estDetruit(Bateau b){
@@ -85,7 +85,7 @@ public class Plateau implements Serializable {
     }
 
     /**
-     * méthode qui vérifie si un bateau est détruit
+     * methode qui verifie si un bateau est detruit
      **/
     boolean estOccupe(Point p1, Point p2,int type){
         int i,j,mini=p1.x,minj=p1.y;
@@ -192,7 +192,7 @@ public class Plateau implements Serializable {
 
 
     /**
-     * méthode qui applique les dégats sur un bateau
+     * methode qui applique les degats sur un bateau
      * dans l'attribut tire on trouvera combien la case de coordonnees x et y lui reste pour prendre des tires
      * dans le cas ou la case une case mere, pour la difirencier de la cae bateau ou la mets a false pour interdir de tirer une autre fois sur cette case
      **/
@@ -241,7 +241,7 @@ public class Plateau implements Serializable {
         return false;
     }
     /**
-     * méthode qui permet de placer les bateau sur le plateau et de les créer aussi
+     * methode qui permet de placer les bateau sur le plateau et de les creer aussi
      **/
 
 

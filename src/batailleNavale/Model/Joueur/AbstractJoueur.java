@@ -150,7 +150,7 @@ public abstract class AbstractJoueur implements Serializable {
 
 
 	/**
-	 * cette methode permet de verifier si tous les bateaux sont détruits
+	 * cette methode permet de verifier si tous les bateaux sont detruits
 	 * @return
 	 */
 	public boolean allBoatsDestroyed(){
@@ -188,7 +188,7 @@ public abstract class AbstractJoueur implements Serializable {
 	}
 
 	/**
-	 * verifier si le joueur a gagné.
+	 * verifier si le joueur a gagne.
 	 * @return
 	 */
 	public boolean gameWon(){

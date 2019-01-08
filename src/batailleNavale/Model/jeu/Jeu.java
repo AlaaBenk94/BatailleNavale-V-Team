@@ -41,7 +41,7 @@ public class Jeu extends Observable implements Serializable {
     }
 
     /**
-     * methode qui créé une nouvelle partie
+     * methode qui cree une nouvelle partie
      * @param nom
      * @param epoque
      */
@@ -149,8 +149,8 @@ public class Jeu extends Observable implements Serializable {
 
     /**
      * methode de tire
-     * @param x coordonnée
-     * @param y coordonnée
+     * @param x coordonnee
+     * @param y coordonnee
      */
     public void tirer_cas(int x, int y){
 

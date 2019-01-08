@@ -39,7 +39,7 @@ public class Machine extends AbstractJoueur implements Serializable {
 
     /**
      * methode qui permet de creer & placer
-     * les bateaux de la machine # aléatoirement #.
+     * les bateaux de la machine # aleatoirement #.
      * @Param epoque Epoque choisi.
      */
     public void initializeBoatPosition(String epoque) {
@@ -72,7 +72,7 @@ public class Machine extends AbstractJoueur implements Serializable {
 
 
     /**
-     * methode qui genere une position dans le plateau aléatoirement.
+     * methode qui genere une position dans le plateau aleatoirement.
      * @return
      */
     private Point[] getRandomPosition(int t){
@@ -119,7 +119,7 @@ public class Machine extends AbstractJoueur implements Serializable {
 
     /**
      * Permet de recuperer un bateau qui tire
-     * Semi - Aléatoirement
+     * Semi - Aleatoirement
      * @return
      */
     private Bateau getRandomBoat(){

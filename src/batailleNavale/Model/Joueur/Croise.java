@@ -61,7 +61,7 @@ public class Croise implements Tirer , Serializable {
     }
 
     /**
-     * cette methode qui crée
+     * cette methode qui cree
      * @return
      */
     public static Croise getInstance(){
