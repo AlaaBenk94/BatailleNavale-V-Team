@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Observable;
@@ -86,11 +87,7 @@ public class FenetreJeu extends JFrame implements Observer {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                try {
-                    g.drawImage(ImageIO.read(new File(Ressources.barre_bg_img)), 0, 0, null);
-                } catch (IOException ex) {
-                    Logger.getLogger(FenetreJeu.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                g.drawImage((new ImageIcon(Ressources.barre_bg_img)).getImage(), 0, 0, null);
             }
         };
         choix_bateux = new javax.swing.JComboBox<>();
@@ -236,11 +233,7 @@ public class FenetreJeu extends JFrame implements Observer {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                try {
-                    g.drawImage(ImageIO.read(new File(Ressources.menu_bg_img)), 0, 0, null);
-                } catch (IOException ex) {
-                    Logger.getLogger(FenetreJeu.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                g.drawImage((new ImageIcon(Ressources.menu_bg_img).getImage()), 0, 0, null);
             }
         };
         menupanel = new javax.swing.JScrollPane();
@@ -248,11 +241,7 @@ public class FenetreJeu extends JFrame implements Observer {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                try {
-                    g.drawImage(ImageIO.read(new File(Ressources.menu_bg_img)), 0, 0, null);
-                } catch (IOException ex) {
-                    Logger.getLogger(FenetreJeu.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                g.drawImage((new ImageIcon(Ressources.menu_bg_img).getImage()), 0, 0, null);
             }
         };
         menucontenu = new javax.swing.JPanel();
@@ -802,7 +791,7 @@ public class FenetreJeu extends JFrame implements Observer {
 
     }
     private Timer timer;
-    private void anime(String img,int time){
+    private void anime(URL img, int time){
             ImageIcon ii = new ImageIcon(img);
             JLabel imgl=new JLabel();
             imgl.setIcon(ii);
