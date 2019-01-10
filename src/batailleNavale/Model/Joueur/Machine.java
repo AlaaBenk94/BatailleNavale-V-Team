@@ -95,7 +95,7 @@ public class Machine extends AbstractJoueur implements Serializable {
     @Override
     public void jouer() {
 
-        System.out.println("YAY C'EST MON TOUR XD");
+        // system.out.println("YAY C'EST MON TOUR XD");
 
         do {
             // choisir le bateaux

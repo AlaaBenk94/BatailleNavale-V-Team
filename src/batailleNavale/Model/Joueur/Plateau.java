@@ -199,7 +199,7 @@ public class Plateau implements Serializable {
     public Ressources.TireEtats prendTire(Tire tire){
         int x = tire.getPositionCible()[0];
         int y = tire.getPositionCible()[1];
-        System.out.println(estNoyer(x,y));
+        // system.out.println(estNoyer(x,y));
         if(!estNoyer(x, y)) {
             if(plateau[x][y]==null){
                 plateau2[x][y] = false;

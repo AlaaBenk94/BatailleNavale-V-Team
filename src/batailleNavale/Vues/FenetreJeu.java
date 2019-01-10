@@ -61,21 +61,14 @@ public class FenetreJeu extends JFrame implements Observer {
         construction();
 
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+            UIManager.setLookAndFeel(new
+                    javax.swing.plaf.metal.MetalLookAndFeel());
+
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
         }
+
         caseposibles = new LinkedList<>();
         caseselectioner = new LinkedList<>();
     }
@@ -751,7 +744,7 @@ public class FenetreJeu extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         etat = modele.getetat();
         if(etat!=Ressources.Etats.Menu){ modele.setetatp(etat);}
-         System.out.println("etat :"+etat);
+         // system.out.println("etat :"+etat);
         if (etat == Ressources.Etats.Placement) {
             upDateMatrice(modele.getBateauMatrice(), modele.getTireMatrice());
             selecteur_fenetre.setSelectedIndex(0);

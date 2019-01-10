@@ -157,20 +157,20 @@ public class Jeu extends Observable implements Serializable {
          if(((Joueur) joueurs[0]).attaquer(pos_Tireur[0],pos_Tireur[1],x,y)) {
 
             etat= Ressources.Etats.Selection;
-            System.out.println(etat);
+            // system.out.println(etat);
 
         }
         if(((Joueur) joueurs[0]).gameOver()){
 
             etat=Ressources.Etats.Gameover;
 
-            System.out.println(etat);
+            // system.out.println(etat);
         }
         else if(((Joueur) joueurs[0]).gameWon()){
 
             etat=Ressources.Etats.Win;
 
-            System.out.println(etat);
+            // system.out.println(etat);
         }
 
         notify_views();
