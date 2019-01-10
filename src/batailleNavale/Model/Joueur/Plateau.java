@@ -283,7 +283,7 @@ public class Plateau implements Serializable {
      */
     public void  affichePlateu(){
         for(int i =0 ;i<plateau.length;i++) {
-            System.out.println();
+            // system.out.println();
             for (int j = 0; j < plateau.length; j++) {
              if(plateau[j][i]==null) {
                  if (plateau2[j][i]) System.out.print("  B  ");

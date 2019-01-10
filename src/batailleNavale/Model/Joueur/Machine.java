@@ -55,18 +55,18 @@ public class Machine extends AbstractJoueur implements Serializable {
             remainingBoeatToPlace--;
         }
 
-        /**
-         * AFFICHAGE PROVISOIRE DE MATRICE DES BATEAUX
-         */
-        System.out.println("********************************************");
-        System.out.println("REMAINING BOATS : " + remainingBoeatToPlace);
-        for(Bateau b : myBoats)
-            System.out.println(b.getNom() + " : " +
-                    "[(" + b.getPosition()[0][0] + "," + b.getPosition()[0][1] + "),(" +
-                    b.getPosition()[1][0] + "," + b.getPosition()[1][1] + ")].");
-        System.out.println("********************************************");
-        myField.affichePlateu();
-        System.out.println("********************************************");
+//        /**
+//         * AFFICHAGE PROVISOIRE DE MATRICE DES BATEAUX
+//         */
+//        System.out.println("********************************************");
+//        System.out.println("REMAINING BOATS : " + remainingBoeatToPlace);
+//        for(Bateau b : myBoats)
+//            System.out.println(b.getNom() + " : " +
+//                    "[(" + b.getPosition()[0][0] + "," + b.getPosition()[0][1] + "),(" +
+//                    b.getPosition()[1][0] + "," + b.getPosition()[1][1] + ")].");
+//        System.out.println("********************************************");
+//        myField.affichePlateu();
+//        System.out.println("********************************************");
 
     }
 

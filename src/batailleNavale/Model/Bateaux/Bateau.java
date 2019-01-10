@@ -89,7 +89,7 @@ public abstract class Bateau implements Serializable {
 	public void afficheBateau(){
 		System.out.print("[ ");
 		for(int i=0;i<cas.length;i++)System.out.print(" |"+cas[i]+"| ");
-		System.out.println("]");
+		// system.out.println("]");
 
 	}
 
