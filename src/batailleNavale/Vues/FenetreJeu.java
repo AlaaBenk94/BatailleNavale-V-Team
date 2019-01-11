@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.text.View;
 
@@ -62,10 +63,15 @@ public class FenetreJeu extends JFrame implements Observer {
 
         try {
 
-            UIManager.setLookAndFeel(new
-                    javax.swing.plaf.metal.MetalLookAndFeel());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
         } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -92,13 +98,16 @@ public class FenetreJeu extends JFrame implements Observer {
         descreptionBateuLabel.setForeground(new java.awt.Color(254, 254, 254));
         choix_bateux.setBackground(new java.awt.Color(254, 254, 254));
         choix_bateux.setFont(new java.awt.Font("Ubuntu", 1, 18));
-        choix_bateux.setForeground(new java.awt.Color(254, 254, 254));
+        choix_bateux.setForeground(new java.awt.Color(0, 140, 186));
         choix_bateux.setModel(new javax.swing.DefaultComboBoxModel<>());
 
         ajouter.setBackground(new java.awt.Color(0, 140, 186));
         ajouter.setFont(new java.awt.Font("Ubuntu", 1, 18));
         ajouter.setForeground(new java.awt.Color(254, 254, 254));
         ajouter.setText("ajouter");
+
+        ajouter.setBorderPainted(false);
+        ajouter.setOpaque(true);
 
         Dimension dim = new Dimension(130, 343);
         descreptionBateuLabel.setMinimumSize(dim);
@@ -318,6 +327,10 @@ public class FenetreJeu extends JFrame implements Observer {
         nouvelle.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         nouvelle.setForeground(new java.awt.Color(254, 254, 254));
         nouvelle.setText("nouvelle");
+
+        nouvelle.setBorderPainted(false);
+        nouvelle.setOpaque(true);
+
         nouvelle.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -328,6 +341,10 @@ public class FenetreJeu extends JFrame implements Observer {
         charger.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         charger.setForeground(new java.awt.Color(254, 254, 254));
         charger.setText("charger ");
+
+        charger.setBorderPainted(false);
+        charger.setOpaque(true);
+
         charger.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -375,6 +392,10 @@ public class FenetreJeu extends JFrame implements Observer {
         mjButton1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         mjButton1.setForeground(new java.awt.Color(254, 254, 254));
         mjButton1.setText("demarer");
+
+        mjButton1.setBorderPainted(false);
+        mjButton1.setOpaque(true);
+
         mjButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -495,6 +516,10 @@ public class FenetreJeu extends JFrame implements Observer {
         save.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         save.setForeground(new java.awt.Color(254, 254, 254));
         save.setText("sauvegarder");
+
+        save.setBorderPainted(false);
+        save.setOpaque(true);
+
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sauvgarder();
