@@ -8,13 +8,10 @@ On a resolu et testé notre implémantation sous MAC OS Sierra 10.12;
 Le probleme c'était due a la valeurs par default de "Opaque" des composants swing, où cet attribut vaut true dans certain LookAndFeel
 et false dans autres. Ce probleme était résolu en ajoutant les instructions suivant sur les composants swing qui n'apparaissent pas.
 
-'''java
 composant.setBorderPainted(false);
 composant.setOpaque(true);
-'''
 
 Pour plus d'information visiter les lien : (https://docs.oracle.com/javase/tutorial/uiswing/painting/problems.html)
-
 ## Resolution de probleme de sauvegarde sous MAC
 Ce probleme était FileNotFoundException, car la maniere dont on a créé le fichier n'était générique pour tous les platformes.
 On a reglé le probleme on créant le fichier de maniere Générique pour tous les OS.
