@@ -8,8 +8,10 @@ On a resolu et testé notre implémantation sous MAC OS Sierra 10.12;
 Le probleme c'était due a la valeurs par default de "Opaque" des composants swing, où cet attribut vaut true dans certain LookAndFeel
 et false dans autres. Ce probleme était résolu en ajoutant les instructions suivant sur les composants swing qui n'apparaissent pas.
 
-""<composant>.setBorderPainted(false);
-<composant>.setOpaque(true)""
+'''
+composant.setBorderPainted(false);
+composant.setOpaque(true)
+'''
 
 Pour plus d'information visiter les lien : https://docs.oracle.com/javase/tutorial/uiswing/painting/problems.html
 
