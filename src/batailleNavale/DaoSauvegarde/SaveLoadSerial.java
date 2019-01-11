@@ -17,10 +17,11 @@ public class SaveLoadSerial extends DAOSaveLoad {
     @Override
     public void sauvegarder(Jeu jeu, String chemin) {
         ObjectOutputStream os = null ;
-        FileOutputStream file= null;
+        File file= null;
         try {
-            file = new FileOutputStream(chemin+ext);
-            os=new ObjectOutputStream(file);
+            file = new File(chemin+ext);
+            file.createNewFile();
+            os=new ObjectOutputStream(new FileOutputStream(file));
             os.writeObject(jeu);
             os.flush();
             os.close();
